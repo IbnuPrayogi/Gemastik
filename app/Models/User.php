@@ -17,10 +17,18 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = 'users';
     protected $fillable = [
-        'name',
+        'id_roles',
+        'pinpoint_id',
+        'nama_company',
+        'nama_pemilik',
         'email',
         'password',
+        'image_users',
+        'rekening',
+        'alamat',
+        'status',
     ];
 
     /**
@@ -29,8 +37,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
+        'nama_company',
+        'nama_pemilik',
         'password',
-        'remember_token',
     ];
 
     /**
@@ -39,6 +48,6 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        //
     ];
 }
