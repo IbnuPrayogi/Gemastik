@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_roles')->nullable()->default(99);
+            $table->unsignedBigInteger('id_roles')->nullable()->default(88);
             $table->foreign('id_roles')->references('id')->on('roles')
             ->constrained('users')->onDelete('cascade')->onUpdate('cascade');
             $table->integer('pinpoint_id');
