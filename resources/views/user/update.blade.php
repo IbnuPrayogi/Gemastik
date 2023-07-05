@@ -1,96 +1,80 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola User')
+@section('title', 'Edit User {{ $users->nama_company }}}}')
 
 @section('content')
-    <!--./Tabel User-->
-    <section class="content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Semua User</h3>
-                        </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">No</th>
-                                        <th>Nama User</th>
-                                        <th>Role</th>
-                                        <th>More</th>
-                                        {{-- <th style="width: 40px">Label</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user => $value)
-                                        <tr>
-                                            <td class="text-center">{{ $users->firstItem() + $user }}</td>
-                                            <td>{{ $value->nama }}</td>
-                                            <td>{{ $value->id_role }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.user.show', $value->id) }}" class="btn btn-info"><i
-                                                        class="fa-solid fa-eye"></i>Lihat</a>
-                                                <a href="{{ route('admin.user.edit', $value->id) }}"
-                                                    class="btn btn-primary">
-                                                    <i class="fa-solid fa-marker"></i> Ubah
-                                                </a>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#hapus-{{ $value->id }}"><i
-                                                        class="fa-solid fa-trash-can"></i> Hapus</button>
-                                                <!-- Modal -->
-                                                <div id="hapus-{{ $value->id }}" class="modal fade" tabindex="-1"
-                                                    role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog bd-danger">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="staticBackdropLabel">
-                                                                    <strong>Hapus User</strong>
-                                                                </h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Apakah Anda yakin ingin menghapus user ini? <br>
-                                                                "{{ $value->nama }}"
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <form action="{{ route('admin.user.destroy', $value->id) }}"
-                                                                    method="POST">
-                                                                    @method('DELETE')
-                                                                    @csrf
-                                                                    <input type="submit" class="btn btn-danger light"
-                                                                        name="" id="" value="Hapus">
-                                                                    <button type="button" class="btn btn-primary"
-                                                                        data-dismiss="modal">Tidak</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal -->
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            {{ $users->links() }}
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                            </ul>
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Edit User</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <form action="{{route('user.update', $users->id)}}" method="POST">
+                                @csrf
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="Nama Perusahaan" name="nama_company" id="nama_company" value="{{ $users->nama_company }}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Nama Pemilik</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="Nama Pemilik" name="nama_pemilik" id="nama_pemilik" value="{{ $users->nama_pemilik }}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Role</label>
+                                    <select name="id_role" required class="custom-select form-control-border"
+                                        id="id_role">
+                                        <option selected value="{{$users->id_role}}">
+                                            @if ($users->id_role == 99)
+                                                Kontraktor
+                                            @if ($users->id_role == 11)
+                                                Admin
+                                            @else
+                                                Tidak terdaftar
+                                            @endif
+                                        </option>
+                                        <option value="11">Admin</option>
+                                        <option value="99">Kontraktor</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Email</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="youremail@mail.com" name="email" id="email" value="{{ $users->email }}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Rekening</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="" name="rekening" id="rekening" value="{{ $users->rekening }}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Alamat</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="" name="alamat" id="alamat" value="{{ $users->alamat }}" required>
+                                    </div>
+                                </div>
+                                <div class="mb-3 row">
+                                    <label class="col-sm-3 col-form-label">Status</label>
+                                    <div class="col-sm-9">
+                                    <input type="text" class="form-control" placeholder="" name="status" id="status" value="{{ $users->status }}" required>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <!-- /.card -->
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
 @endsection

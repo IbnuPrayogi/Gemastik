@@ -48,6 +48,15 @@
                 <i class="fas fa-th-large"></i>
             </a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" data-slide="true" role="button" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+                <i class="fas fa-right-from-bracket" style="color: red"></i>
+            </a>
+            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                @csrf
+            </form>
+        </li>
     </ul>
 </nav>
 <!-- /.navbar -->
@@ -90,14 +99,6 @@
                 <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a href="" class="nav-link {{ Request::routeIs('admin.cms.index') ? 'active' : '' }}">
-                      <i class="nav-icon fas fa-solid fa-chart-pie"></i>
-                        <p>
-                            Dashboard
-                        </p>
-                    </a>
-                </li>
-                <li class="nav-item">
                     <a role="button" class="nav-link {{ Request::routeIs('user.*') ? 'active' : '' }}">
                       <i class="nav-icon fas fa-solid fa-users"></i>
                         <p>
@@ -121,9 +122,9 @@
                 </li>
                 <li class="nav-item">
                     <a role="button" class="nav-link {{ Request::routeIs('admin.beasiswa.*') ? 'active' : '' }}">
-                      <i class="nav-icon fas fa-solid fa-star"></i>
+                      <i class="nav-icon fas fa-solid fa-book-atlas"></i>
                         <p>
-                            Beasiswa
+                            Laporan Perbaikan
                             <i class="right fas fa-angle-left"></i>
                         </p>
                     </a>
@@ -131,22 +132,22 @@
                         <li class="nav-item">
                             <a href="" class="nav-link {{ Request::routeIs('admin.beasiswa.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Tambah Beasiswa</p>
+                                <p>Tambah Laporan</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link {{ Request::routeIs('admin.beasiswa.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Kelola Beasiswa</p>
+                                <p>Kelola Laporan</p>
                             </a>
                         </li>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a role="button" class="nav-link {{ Request::routeIs('admin.alumni.*') ? 'active' : '' }}">
-                        <i class="nav-icon fas fa-solid fa-user-graduate"></i>
+                        <i class="nav-icon fas fa-solid fa-map-location-dot"></i>
                         <p>
-                            Alumni
+                            Analisis Map
                             <i class="fas fa-angle-left right"></i>
                         </p>
                     </a>
@@ -154,13 +155,13 @@
                         <li class="nav-item">
                             <a href="" class="nav-link {{ Request::routeIs('admin.alumni.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Tambah Alumni</p>
+                                <p>Tampilan Map</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link {{ Request::routeIs('admin.alumni.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Kelola Alumni</p>
+                                <p>Tabel Map</p>
                             </a>
                         </li>
                     </ul>

@@ -18,9 +18,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
-                                        <th>Nama Company</th>
+                                        <th>Nama Perusahaan</th>
                                         <th>Nama Pemilik</th>
-                                        <th>ID Pinpoint</th>
                                         <th>Roles</th>
                                         <th>Email</th>
                                         <th>Rekening</th>
@@ -36,11 +35,12 @@
                                             <td class="text-center">{{ $users->firstItem() + $user }}</td>
                                             <td>{{ $value->nama_company }}</td>
                                             <td>{{ $value->nama_pemilik }}</td>
-                                            <td>{{ $value->pinpoint_id }}</td>
+                                            @if ($value->id_role == 99)
+                                                <td>Kontraktor</td>
                                             @if ($value->id_role == 11)
                                                 <td>Admin</td>
                                             @else
-                                                <td>Kontraktor</td>
+                                                <td>Tidak Terdaftar</td>
                                             @endif
                                             <td>{{ $value->email }}</td>
                                             <td>{{ $value->rekening }}</td>
