@@ -3,11 +3,12 @@
 namespace App\Http\Controllers\helper;
 
 use App\Models\User;
+use App\Models\Pelaporan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
-use App\Models\Pelaporan;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class PelaporanController extends Controller
 {
@@ -72,7 +73,8 @@ class PelaporanController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pelaporan=Pelaporan::where('id',$id)->first();
+        return view('pelaporan.update',compact('pelaporan'));
     }
 
     /**
@@ -80,6 +82,17 @@ class PelaporanController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $pelaporan = Pelaporan::where('id', $id)->first();
+        $pelaporan->nama_proyek = $request->input('nama_proyek');
+        $pelaporan->nama_lokasi = $request->input('nama_lokasi');
+        $pelaporan->nama_company = $request->input('nama_company');
+        $pelaporan->longitude = $request->input('longitude');
+        $pelaporan->latitude = $request->input('latitude');
+        $pelaporan->tgl_end = $request->input('tgl_end');
+        $pelaporan->save();
+
+        return view('pelaporan.index');
+
         //
     }
 
@@ -88,6 +101,11 @@ class PelaporanController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = Pelaporan::where('id', $id)->first();
+        $data->delete();
+
+        Session::flash('success', 'Data User Berhasil DiHapus');
+        $pelaporans=Pelaporan::all();
+        return redirect()->back();
     }
 }

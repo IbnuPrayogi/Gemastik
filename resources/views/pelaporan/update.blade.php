@@ -1,96 +1,82 @@
 @extends('layouts.app')
 
-@section('title', 'Kelola User')
+@section('title', 'Tambah User')
 
 @section('content')
-    <!--./Tabel User-->
+    <!-- Main content -->
     <section class="content">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-12">
-                    <div class="card">
+                <!-- left column -->
+                <div class="col-md-12">
+                    <!-- general form elements -->
+                    <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Semua User</h3>
+                            <h3 class="card-title">Tambah User baru</h3>
                         </div>
-                        <!-- /.card-header -->
-                        <div class="card-body">
-                            <table class="table table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px">No</th>
-                                        <th>Nama User</th>
-                                        <th>Role</th>
-                                        <th>More</th>
-                                        {{-- <th style="width: 40px">Label</th> --}}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($users as $user => $value)
-                                        <tr>
-                                            <td class="text-center">{{ $users->firstItem() + $user }}</td>
-                                            <td>{{ $value->nama }}</td>
-                                            <td>{{ $value->id_role }}</td>
-                                            <td>
-                                                <a href="{{ route('admin.user.show', $value->id) }}" class="btn btn-info"><i
-                                                        class="fa-solid fa-eye"></i>Lihat</a>
-                                                <a href="{{ route('admin.user.edit', $value->id) }}"
-                                                    class="btn btn-primary">
-                                                    <i class="fa-solid fa-marker"></i> Ubah
-                                                </a>
-                                                <!-- Button trigger modal -->
-                                                <button type="button" class="btn btn-danger" data-toggle="modal"
-                                                    data-target="#hapus-{{ $value->id }}"><i
-                                                        class="fa-solid fa-trash-can"></i> Hapus</button>
-                                                <!-- Modal -->
-                                                <div id="hapus-{{ $value->id }}" class="modal fade" tabindex="-1"
-                                                    role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog bd-danger">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="staticBackdropLabel">
-                                                                    <strong>Hapus User</strong>
-                                                                </h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Apakah Anda yakin ingin menghapus user ini? <br>
-                                                                "{{ $value->nama }}"
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <form action="{{ route('admin.user.destroy', $value->id) }}"
-                                                                    method="POST">
-                                                                    @method('DELETE')
-                                                                    @csrf
-                                                                    <input type="submit" class="btn btn-danger light"
-                                                                        name="" id="" value="Hapus">
-                                                                    <button type="button" class="btn btn-primary"
-                                                                        data-dismiss="modal">Tidak</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- /.modal -->
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            {{ $users->links() }}
-                        </div>
-                        <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                            </ul>
-                        </div>
+                        <!-- /.card-header 
+                        <th style="width: 10px">No</th>
+                                        <th>Nama Company</th>
+                                        <th>Nama Pemilik</th>
+                                        <th>ID Pinpoint</th>
+                                        <th>Email</th>
+                                        <th>Rekening</th>
+                                        <th>Alamat</th>
+                                        <th>Status</th>
+                                        <th>Created at</th>
+                                        <th>More</th>-->
+                        <!-- form start -->
+                        <form method="POST" action="{{ route('pelaporan.update',$pelaporan->id) }}" enctype='multipart/form-data'>
+                            @csrf
+                            @method('PUT')
+                            <div class="card-body">
+                                {{-- <div class="form-group">
+                                    <label for="id_role">Roles</label>
+                                    <select name="id_role" required class="custom-select form-control-border"
+                                        id="id_role">
+                                        <option selected>=== PILIH ROLE ===</option>
+                                        <option value="888">SuperAdmin</option>
+                                        <option value="999">OP</option>
+                                        <option value="1000">Penristek</option>
+                                    </select>
+                                </div> --}}
+
+                                <div class="form-group">
+                                    <label for="email">Nama Proyek</label>
+                                    <input name="nama_proyek" type="text" class="form-control" id="nama_proyek" value="{{ $pelaporan->nama_proyek }}"
+                                        placeholder="{{ $pelaporan->nama_proyek }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nama_lokasi">Nama Lokasi</label>
+                                    <input name="nama_lokasi" class="form-control" id="nama_lokasi" placeholder="{{ $pelaporan->nama_lokasi }}" value="{{ $pelaporan->nama_lokasi }}"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Nama Perusahaan</label>
+                                    <input name="nama_company" type="nama_company" class="form-control" id="nama_company" value="{{ $pelaporan->nama_company }}"
+                                        placeholder="{{ $pelaporan->nama_company }}">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nama">Longitude</label>
+                                    <input name="longitude" class="form-control" id="longitude" placeholder="{{ $pelaporan->longitude }}" value="{{ $pelaporan->longitude }}"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="latitude">Latitude</label>
+                                    <input name="latitude" class="form-control" id="latitude" placeholder="{{ $pelaporan->latitude }}" value="{{ $pelaporan->latitude }}"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tgl_end">Tanggal Selesai</label>
+                                    <input type="datetime-local" name="tgl_end" class="form-control" id="tgl_end" placeholder="{{ $pelaporan->tgl_end}}" value="{{ $pelaporan->tgl_end}}"
+                                        required>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
                     <!-- /.card -->
-                </div>
-            </div>
-        </div>
-    </section>
-@endsection
+                @endsection

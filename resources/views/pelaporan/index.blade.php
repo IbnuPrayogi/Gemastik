@@ -39,12 +39,12 @@
                                             <td>{{ $no }}</td>
                                             <td>{{ $value->nama_proyek }}</td>
                                             <td>{{ $value->nama_lokasi }}</td>
-                                            <td>{{ $value->nama_perusahaan }}</td>
+                                            <td>{{ $value->nama_company }}</td>
                                             <td>{{ $value->longitude }}</td>
                                             <td>{{ $value->latitude }}</td>
                                             <td>{{ $value->foto }}</td>
-                                            <td>{{ Str::limit($value->tgl_start, 10) }}</td>
-                                            <td>{{ Str::limit($value->tgl_end, 10) }}</td>
+                                            <td>{{ $value->tgl_start }}</td>
+                                            <td>{{ $value->tgl_end}}</td>
                                             <td>{{ $value->created_at }}</td>
                                             <td class="justify-content-center d-flex">
                                                 <a href="{{ route('pelaporan.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
@@ -64,15 +64,15 @@
                                                         <div class="modal-content">
                                                             <div class="modal-header">
                                                                 <h5 class="modal-title" id="staticBackdropLabel">
-                                                                    <strong>Hapus User</strong>
+                                                                    <strong>Hapus Laporan</strong>
                                                                 </h5>
                                                             </div>
                                                             <div class="modal-body">
-                                                                Apakah Anda yakin ingin menghapus user ini? <br>
+                                                                Apakah Anda yakin ingin menghapus laporan ini? <br>
                                                                 "{{ $value->nama_proyek }}"
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <form action="{{ route('user.destroy', $value->id) }}"
+                                                                <form action="{{ route('pelaporan.destroy', $value->id) }}"
                                                                     method="POST">
                                                                     @method('DELETE')
                                                                     @csrf
