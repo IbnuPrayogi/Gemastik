@@ -16,8 +16,13 @@ class Pelaporan extends Model
         'nama_company',
         'longitude',
         'latitude',
+        'foto',
         'tgl_start',
-        'tgl_end',
-        'tgl_estimasi_perbaikan_lanjutan',
+        'tgl_end', 
     ];
+
+    public function users()
+{
+    return $this->belongsTo(User::class);
+}
 }

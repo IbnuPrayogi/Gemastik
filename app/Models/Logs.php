@@ -18,3 +18,4 @@ class Logs extends Model
         'ip_address',
     ];
 }
+

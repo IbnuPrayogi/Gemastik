@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\helper\PelaporanController;
 use App\Http\Controllers\helper\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -20,3 +21,5 @@ Route::post('/', 'App\Http\Controllers\Auth\LoginController@login');
 Route::resource('/user', UserController::class);
 Auth::routes(['login' => false]);
 
+
+Route::resource('pelaporan',PelaporanController::class);

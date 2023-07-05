@@ -16,7 +16,6 @@ return new class extends Migration
             $table->unsignedBigInteger('id_roles')->nullable()->default(88);
             $table->foreign('id_roles')->references('id')->on('roles')
             ->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->integer('pinpoint_id');
             $table->string('nama_company');
             $table->string('nama_pemilik');
             $table->string('email')->unique();
