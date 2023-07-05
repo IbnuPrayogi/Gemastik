@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\helper\UserController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -16,8 +17,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('/', 'App\Http\Controllers\Auth\LoginController@login');
-
-
+Route::resource('/user', UserController::class);
 Auth::routes(['login' => false]);
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
