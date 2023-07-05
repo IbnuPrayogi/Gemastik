@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\helper;
 
-use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use App\Http\Controllers\Controller;
+use App\Models\Pelaporan;
+use Illuminate\Support\Facades\Hash;
 
 class PelaporanController extends Controller
 {
@@ -12,7 +16,8 @@ class PelaporanController extends Controller
      */
     public function index()
     {
-        //
+        $pelaporans=Pelaporan::all();
+        return view('pelaporan.index',compact('pelaporans'));
     }
 
     /**
@@ -20,7 +25,7 @@ class PelaporanController extends Controller
      */
     public function create()
     {
-        //
+        return view('pelaporan.create');
     }
 
     /**
@@ -28,7 +33,30 @@ class PelaporanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'foto' => 'required|mimes:jpeg,png,jpg,gif|max:5120 ',
+        ]);
+        
+        $file = $validatedData[('foto')];
+        $filename =  $file->getClientOriginalName();
+      
+        $location = '../public/assets/images/';
+        Pelaporan::create([
+            'unique_id' => 1,
+            'nama_proyek' => $request->nama_proyek,
+            'nama_lokasi' => $request->nama_lokasi,
+            'nama_company' => $request->nama_company,
+            'longitude' => $request->longitude,
+            'latitude' => $request->latitude,
+            'foto'=>$filename,
+            'tgl_start' => $request->tgl_start,
+            'tgl_end' => $request->tgl_end,
+        ]);
+
+        $file->move(public_path($location), $filename);
+        // Session::flash('success', 'Data User Berhasil Ditambahkan');
+        return view('pelaporan.create');
+        
     }
 
     /**

@@ -20,7 +20,6 @@ class User extends Authenticatable
     protected $table = 'users';
     protected $fillable = [
         'id_roles',
-        'pinpoint_id',
         'nama_company',
         'nama_pemilik',
         'email',
@@ -50,4 +49,14 @@ class User extends Authenticatable
     protected $casts = [
         //
     ];
+
+    public function roles()
+{
+    return $this->belongsTo(Roles::class);
+}
+    public function pelaporan()
+    {
+        return $this->hasMany(Pelaporan::class);
+    }
+
 }
