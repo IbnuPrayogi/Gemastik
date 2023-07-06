@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('nama_company');
             $table->string('longitude');
             $table->string('latitude');
+            $table->string('foto');
             $table->dateTime('tgl_start');
             $table->dateTime('tgl_end');
-            $table->dateTime('tgl_estimasi_perbaikan_lanjutan');
             $table->timestamps();
         });
     }

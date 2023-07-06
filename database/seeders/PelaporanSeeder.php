@@ -23,7 +23,6 @@ class PelaporanSeeder extends Seeder
                 'latitude' => '123.123',
                 'tgl_start' => '2021-07-04 08:01:07',
                 'tgl_end' => '2021-07-04 08:01:07',
-                'tgl_estimasi_perbaikan_lanjutan' => '2021-07-04 08:01:07',
             ],
             [
                 'unique_id' => '1',
@@ -34,7 +33,6 @@ class PelaporanSeeder extends Seeder
                 'latitude' => '123.123',
                 'tgl_start' => '2021-07-04 08:01:07',
                 'tgl_end' => '2021-07-04 08:01:07',
-                'tgl_estimasi_perbaikan_lanjutan' => '2021-07-04 08:01:07',
             ],
         ];
         Pelaporan::query()->insert($pelaporan);

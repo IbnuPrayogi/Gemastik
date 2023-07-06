@@ -18,7 +18,6 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'pinpoint_id' => fake()->randomNumber(),
             'nama_company' => fake()->userName(),
             'nama_pemilik' => fake()->userName(),
             'email' => fake()->unique()->safeEmail(),
