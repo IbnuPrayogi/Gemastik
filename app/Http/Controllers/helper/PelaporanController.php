@@ -101,11 +101,11 @@ class PelaporanController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = Pelaporan::where('id', $id)->first();
+        $data = User::where('id', $id)->first();
         $data->delete();
 
         Session::flash('success', 'Data User Berhasil DiHapus');
-        $pelaporans=Pelaporan::all();
+        $users=User::all();
         return redirect()->back();
     }
 }

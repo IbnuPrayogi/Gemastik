@@ -58,11 +58,11 @@
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
-                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $user->id }}">
+                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm{{ $user->id }}" >
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                                 <!-- Modal -->
-                                                <div id="hapus-{{ $user->id }}" class="modal fade" tabindex="-1"
+                                                <div class="modal fade bd-example-modal-sm{{ $user->id }}"  tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog bd-danger">
                                                         <div class="modal-content">
@@ -115,4 +115,6 @@
             </div>
         </div>
     </section>
+
+
 @endsection
