@@ -30,36 +30,39 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($users as $user => $value)
+                                    @php
+                                        $no=1;
+                                    @endphp
+                                    @foreach ($users as $user )
                                         <tr>
-                                            <td class="text-center">{{ $users->firstItem() + $user }}</td>
-                                            <td>{{ $value->nama_company }}</td>
-                                            <td>{{ $value->nama_pemilik }}</td>
-                                            @if ($value->id_role == 99)
+                                            <td>{{ $no }}</td>
+                                            <td>{{ $user->nama_company }}</td>
+                                            <td>{{ $user->nama_pemilik }}</td>
+                                            @if ($user->id_role == 99)
                                                 <td>Kontraktor</td>
-                                            @if ($value->id_role == 11)
+                                            @elseif ($user->id_role == 11)
                                                 <td>Admin</td>
                                             @else
                                                 <td>Tidak Terdaftar</td>
                                             @endif
-                                            <td>{{ $value->email }}</td>
-                                            <td>{{ $value->rekening }}</td>
-                                            <td>{{ Str::limit($value->alamat, 10) }}</td>
-                                            <td>{{ $value->status }}</td>
-                                            <td>{{ $value->created_at }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->rekening }}</td>
+                                            <td>{{ Str::limit($user->alamat, 10) }}</td>
+                                            <td>{{ $user->status }}</td>
+                                            <td>{{ $user->created_at }}</td>
                                             <td class="justify-content-center d-flex">
-                                                <a href="{{ route('user.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
+                                                <a href="{{ route('user.show', $user->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('user.edit', $value->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
+                                                <a href="{{ route('user.edit', $user->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
-                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}">
+                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $user->id }}">
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                                 <!-- Modal -->
-                                                <div id="hapus-{{ $value->id }}" class="modal fade" tabindex="-1"
+                                                <div id="hapus-{{ $user->id }}" class="modal fade" tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog bd-danger">
                                                         <div class="modal-content">
@@ -70,10 +73,10 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 Apakah Anda yakin ingin menghapus user ini? <br>
-                                                                "{{ $value->nama_company }}"
+                                                                "{{ $user->nama_company }}"
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <form action="{{ route('user.destroy', $value->id) }}"
+                                                                <form action="{{ route('user.destroy', $user->id) }}"
                                                                     method="POST">
                                                                     @method('DELETE')
                                                                     @csrf
@@ -89,10 +92,12 @@
                                                 <!-- /.modal -->
                                             </td>
                                         </tr>
+                                        @php
+                                        $no++;
+                                    @endphp
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $users->links() }}
                         </div>
                         <!-- /.card-body -->
                         <div class="card-footer clearfix">
