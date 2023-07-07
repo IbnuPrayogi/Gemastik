@@ -37,7 +37,7 @@
                                             <td>{{ $value->nama_pemilik }}</td>
                                             @if ($value->id_role == 99)
                                                 <td>Kontraktor</td>
-                                            @if ($value->id_role == 11)
+                                            @elseif ($value->id_role == 11)
                                                 <td>Admin</td>
                                             @else
                                                 <td>Tidak Terdaftar</td>

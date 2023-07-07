@@ -16,14 +16,16 @@ return new class extends Migration
             $table->unsignedBigInteger('unique_id')->nullable();
             $table->foreign('unique_id')->references('id')->on('users')
             ->constrained('pelaporan')->onUpdate('cascade');
-            $table->string('nama_proyek');
-            $table->string('nama_lokasi');
-            $table->string('nama_company');
-            $table->string('longitude');
-            $table->string('latitude');
-            $table->string('foto');
-            $table->dateTime('tgl_start');
-            $table->dateTime('tgl_end');
+            $table->string('panjang_perbaikan')->nullable();
+            $table->string('lebar_perbaikan')->nullable();
+            $table->string('nama_lokasi')->nullable();
+            $table->string('nama_company')->nullable();
+            $table->string('longitude')->nullable();
+            $table->string('latitude')->nullable();
+            $table->string('foto')->nullable();
+            $table->dateTime('tgl_start')->nullable();
+            $table->dateTime('tgl_end')->nullable();
+            $table->string('status');
             $table->timestamps();
         });
     }

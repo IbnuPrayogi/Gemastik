@@ -23,3 +23,6 @@ Auth::routes(['login' => false]);
 
 
 Route::resource('pelaporan',PelaporanController::class);
+
+Route::get('/map', 'App\Http\Controllers\Api\MapController@index');
+Route::post('/save-coordinates', 'App\Http\Controllers\Api\MapController@saveCoordinates');

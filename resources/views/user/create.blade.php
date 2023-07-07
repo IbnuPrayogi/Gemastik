@@ -33,10 +33,8 @@
                                     <label for="id_role">Roles</label>
                                     <select name="id_role" required class="custom-select form-control-border"
                                         id="id_role">
-                                        <option selected>=== PILIH ROLE ===</option>
-                                        <option value="888">SuperAdmin</option>
-                                        <option value="999">OP</option>
-                                        <option value="1000">Penristek</option>
+                                        <option value="11">Admin</option>
+                                        <option value="99" selected>Kontraktor</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
