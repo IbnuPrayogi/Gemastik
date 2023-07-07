@@ -16,13 +16,13 @@ return new class extends Migration
             $table->unsignedBigInteger('id_roles')->nullable()->default(88);
             $table->foreign('id_roles')->references('id')->on('roles')
             ->constrained('users')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('nama_company');
-            $table->string('nama_pemilik');
+            $table->string('nama_company')->nullable();
+            $table->string('nama_pemilik')->nullable();
             $table->string('email')->unique();
             $table->string('password');
             $table->string('image_users')->nullable();
-            $table->string('rekening');
-            $table->string('alamat');
+            $table->string('rekening')->nullable();
+            $table->string('alamat')->nullable();
             $table->string('status');
             $table->rememberToken();
             $table->timestamps();

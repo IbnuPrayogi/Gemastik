@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('log', function (Blueprint $table) {
             $table->id();
-            $table->string('nama_logger');
-            $table->string('aktivitas');
-            $table->dateTime('tgl_aktivitas');
-            $table->string('data_terupdate');
-            $table->string('device_name');
-            $table->string('ip_address');
+            $table->string('nama_logger')->nullable();
+            $table->string('aktivitas')->nullable();
+            $table->dateTime('tgl_aktivitas')->nullable();
+            $table->string('data_terupdate')->nullable();
+            $table->string('device_name')->nullable();
+            $table->string('ip_address')->nullable();
             $table->timestamps();
         });
     }

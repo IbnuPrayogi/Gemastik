@@ -106,6 +106,30 @@
                         coordinates: [115.1628, -8.3405]
                     }
                 },
+                {
+                    type: 'Feature',
+                    properties: {
+                        name: 'Bandung',
+                        description: 'Lokasi gw',
+                        links: 'https://www.example.com'
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [107.6643171912623, -6.962141595962189]
+                    }
+                },
+                {
+                    type: 'Feature',
+                    properties: {
+                        name: 'Bandung',
+                        description: 'Tegallega',
+                        links: 'https://www.example.com'
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [107.60319073076269, -6.937085780664934]
+                    }
+                },
                 // Add more points within Indonesia here
             ]
             };
