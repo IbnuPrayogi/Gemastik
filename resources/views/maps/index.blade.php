@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map</title>
+    <style>
+        #container{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        #map {
+            width: 90%;
+            height: 800px;
+        }
+        .ol-popup {
+            position: absolute;
+            background-color: white;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #cccccc;
+            bottom: 12px;
+            left: -50px;
+            min-width: 200px;
+        }
+
+        .ol-popup:after,
+        .ol-popup:before {
+            top: 100%;
+            left: 23%;
+            border: solid transparent;
+            content: ' ';
+            height: 0;
+            width: 0;
+            position: absolute;
+            pointer-events: none;
+        }
+
+        .ol-popup:after {
+            border-top-color: white;
+            border-width: 10px;
+            margin-left: -10px;
+        }
+
+        .ol-popup:before {
+            border-top-color: #cccccc;
+            border-width: 11px;
+            margin-left: -11px;
+        }
+        .ol-popup-closer {
+            text-decoration: none;
+            position: absolute;
+            top: 2px;
+            right: 8px;
+            cursor: pointer;
+        }
+        @media screen and (min-width: 768px) {
+            #map {
+                width: 80%;
+                height:400px !important;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('ol/ol.css') }}">
+</head>
+<body>
+    <h1>Map</h1>
+    <div id="container">
+        <div id="map"></div>
+    </div>
+    <div id="popup" class="ol-popup">
+        <a role="button" id="popup-closer" class="ol-popup-closer" onclick="closePopup()">Tutup</a>
+        <div id="popup-content"></div>
+    </div>
+    <p>Latitude: <span id="latitude"></span></p>
+    <p>Longitude: <span id="longitude"></span></p>
+
+    <script src="{{ asset('ol/dist/ol.js') }}"></script>
+    <script>
+        // JSON data with point coordinates
+        var jsonData = {
+            type: 'FeatureCollection',
+            features: [
+                {
+                    type: 'Feature',
+                    properties: {
+                        name: 'Jakarta',
+                        description: 'Capital city of Indonesia',
+                        links: 'https://www.example.com'
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [106.8272, -6.1751]
+                    }
+                },
+                {
+                    type: 'Feature',
+                    properties: {
+                        name: 'Bali',
+                        description: 'Popular tourist destination',
+                        links: 'https://www.example.com'
+                    },
+                    geometry: {
+                        type: 'Point',
+                        coordinates: [115.1628, -8.3405]
+                    }
+                },
+                // Add more points within Indonesia here
+            ]
+            };
+
+            // Initialize the map and geolocation
+            var map = new ol.Map({
+            target: 'map',
+            layers: [
+                new ol.layer.Tile({
+                source: new ol.source.OSM(),
+                }),
+            ],
+            view: new ol.View({
+                center: ol.proj.fromLonLat([113.9213, -4.8893]), // Initial map center
+                zoom: 6, // Initial zoom level
+            }),
+        });
+        
+        var geolocation = new ol.Geolocation({
+            trackingOptions: {
+                enableHighAccuracy: true,
+            },
+            projection: map.getView().getProjection(),
+        });
+        
+        // Create a vector layer to display the points and user location
+        var vectorLayer = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [],
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: '{{ URL::asset('/assets/icons/pin.png') }}', // Replace with your custom pin icon image path
+                    scale: 0.08,
+                }),
+                text: new ol.style.Text({
+                    text: '',
+                    font: '12px sans-serif',
+                    offsetX: 0,
+                    offsetY: -20,
+                    fill: new ol.style.Fill({ color: '#000000' }),
+                    stroke: new ol.style.Stroke({ color: '#FFFFFF', width: 2 }),
+                }),
+            }),
+        });
+        
+        // Add the vector layer to the map
+        map.addLayer(vectorLayer);
+
+        function openPopup(coordinates, latitude, longitude, name, description, links) {
+            var popupContent = document.getElementById('popup-content');
+            popupContent.innerHTML = '<h3>' + name + '</h3>'
+            popupContent.innerHTML += '<p>' + description + '</p>'
+            popupContent.innerHTML += '<a href="' + links + '" target="_blank">Cek Laporan</a>';
+            popupContent.innerHTML += '<p> latitude : ' + latitude + '</p>'
+            popupContent.innerHTML += '<p> longitude : ' + longitude + '</p>'
+
+            popupOverlay.setPosition(coordinates);
+        }
+        
+        // Function to close the popup
+        function closePopup() {
+            popupOverlay.setPosition(undefined);
+        }
+        
+        map.on('click', function (event) {
+            map.forEachFeatureAtPixel(event.pixel, function (feature) {
+                console.log(coordinates);
+                var coordinates = feature.getGeometry().getCoordinates();
+                var latitude = feature.get('latitude');
+                var longitude = feature.get('longitude');
+                var name = feature.get('name');
+                var description = feature.get('description');
+                var links = feature.get('links');
+
+                openPopup(coordinates, latitude, longitude, name, description, links);
+            });
+        });
+
+        // Handle close event of the popup
+        document.getElementById('popup-closer').onclick = function () {
+            closePopup();
+            return false;
+        };
+
+        jsonData.features.forEach(function(point) {
+            var marker = new ol.Feature({
+                geometry: new ol.geom.Point(ol.proj.fromLonLat(point.geometry.coordinates)),
+                latitude: point.geometry.coordinates[0],
+                longitude: point.geometry.coordinates[1],
+                name: point.properties.name,
+                description: point.properties.description,
+                links: point.properties.links,
+            });
+
+            vectorLayer.getSource().addFeature(marker);
+        });
+
+        var popupOverlay = new ol.Overlay({
+            element: document.getElementById('popup'),
+            positioning: 'bottom-center',
+            offset: [0, -10],
+            stopEvent: false,
+        });
+
+        map.addOverlay(popupOverlay);
+        
+        // Create and add points to the vector layer from the JSON data
+        // jsonData.forEach(function(point) {
+        //     var marker = new ol.Feature({
+        //         geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
+        //         name: 'Point ' + point.id,
+        //     });
+    
+        // vectorLayer.getSource().addFeature(marker);
+        // });
+    
+        // Track user's location
+        // geolocation.on('change:position', function() {
+        //     var coordinates = geolocation.getPosition();
+        //     var accuracy = geolocation.getAccuracy();
+        
+        //     // Clear previous user location feature
+        //     vectorLayer.getSource().clear();
+        
+            // Create a new feature for the user's location
+            // var userMarker = new ol.Feature({
+            //     geometry: new ol.geom.Point(coordinates),
+            //     name: 'Your Location',
+            // });
+        
+            // vectorLayer.getSource().addFeature(userMarker);
+        
+            // Update the HTML element with the coordinates 
+        //     document.getElementById('coordinates').innerHTML =
+        //     'Latitude: ' +
+        //     coordinates[1].toFixed(6) +
+        //     ', Longitude: ' +
+        //     coordinates[0].toFixed(6) +
+        //     ' (Accuracy: ' +
+        //     accuracy.toFixed(2) +
+        //     ' meters)';
+        // });
+      
+        // Start tracking the user's location
+        // geolocation.setTracking(true);
+      </script>
+      
+</body>
+</html>
