@@ -65,7 +65,8 @@ class PelaporanController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pelaporan = Pelaporan::findOrFail($id);
+        return view('pelaporan.read', compact('pelaporan'));
     }
 
     /**

@@ -3,14 +3,37 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Pelaporan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class MapController extends Controller
 {
     public function index()
     {
-        return view('maps.index');
+        $jsonMap = Pelaporan::all();
+        $jsonData = [
+            'type' => 'FeatureCollection',
+            'features' => []
+        ];
+        foreach ($jsonMap as $key => $value) {
+            $jsonData['features'][] = [
+                'type' => 'Feature',
+                'properties' => [
+                    'name' => $value->nama_lokasi,
+                    'description' => $value->nama_company,
+                    'links' => '/pelaporan' . Str::of($value->id)->prepend('/'),
+                    'status' => $value->status
+                ],
+                'geometry' => [
+                    'type' => 'Point',
+                    'coordinates' => [$value->latitude, $value->longitude]
+                ]
+            ];
+        }
+        $jsonData = json_encode($jsonData);
+        return view('map.index', compact('jsonData'));
     }
 
     public function saveCoordinates(Request $request)

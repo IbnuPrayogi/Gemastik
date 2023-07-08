@@ -1,7 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Map</title>
+@extends('layouts.app')
+
+@section('title', 'Map Berdasarkan Status')
+@section('css')
+    
     <style>
         #container{
             width: 100%;
@@ -55,6 +56,12 @@
             right: 8px;
             cursor: pointer;
         }
+        .ol-popup-closer:after {
+            content: "✖";
+        }
+        .blacker{
+            color: black !important;
+        }
         @media screen and (min-width: 768px) {
             #map {
                 width: 80%;
@@ -63,76 +70,78 @@
         }
     </style>
     <link rel="stylesheet" href="{{ asset('ol/ol.css') }}">
-</head>
-<body>
-    <h1>Map</h1>
+@endsection
+@section('content')
     <div id="container">
         <div id="map"></div>
+        <div id="popup" class="ol-popup">
+            <a role="button" id="popup-closer" class="ol-popup-closer" onclick="closePopup()"></a>
+            <div id="popup-content"></div>
+        </div>
     </div>
-    <div id="popup" class="ol-popup">
-        <a role="button" id="popup-closer" class="ol-popup-closer" onclick="closePopup()">Tutup</a>
-        <div id="popup-content"></div>
-    </div>
-    <p>Latitude: <span id="latitude"></span></p>
-    <p>Longitude: <span id="longitude"></span></p>
 
     <script src="{{ asset('ol/dist/ol.js') }}"></script>
     <script>
         // JSON data with point coordinates
-        var jsonData = {
-            type: 'FeatureCollection',
-            features: [
-                {
-                    type: 'Feature',
-                    properties: {
-                        name: 'Jakarta',
-                        description: 'Capital city of Indonesia',
-                        links: 'https://www.example.com'
-                    },
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [106.8272, -6.1751]
-                    }
-                },
-                {
-                    type: 'Feature',
-                    properties: {
-                        name: 'Bali',
-                        description: 'Popular tourist destination',
-                        links: 'https://www.example.com'
-                    },
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [115.1628, -8.3405]
-                    }
-                },
-                {
-                    type: 'Feature',
-                    properties: {
-                        name: 'Bandung',
-                        description: 'Lokasi gw',
-                        links: 'https://www.example.com'
-                    },
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [107.6643171912623, -6.962141595962189]
-                    }
-                },
-                {
-                    type: 'Feature',
-                    properties: {
-                        name: 'Bandung',
-                        description: 'Tegallega',
-                        links: 'https://www.example.com'
-                    },
-                    geometry: {
-                        type: 'Point',
-                        coordinates: [107.60319073076269, -6.937085780664934]
-                    }
-                },
-                // Add more points within Indonesia here
-            ]
-            };
+        var jsonData = {!! $jsonData !!};
+        // {
+        //     type: 'FeatureCollection',
+        //     features: [
+        //         {
+        //             type: 'Feature',
+        //             properties: {
+        //                 name: 'Jakarta',
+        //                 description: 'Capital city of Indonesia',
+        //                 links: 'https://www.example.com',
+        //                 status: 'Sudah Diperbaiki'
+        //             },
+        //             geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [106.8272, -6.1751]
+        //             }
+        //         },
+        //         {
+        //             type: 'Feature',
+        //             properties: {
+        //                 name: 'Bali',
+        //                 description: 'Popular tourist destination',
+        //                 links: 'https://www.example.com',
+        //                 status: 'Proses Perbaikan'
+        //             },
+        //             geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [115.1628, -8.3405]
+        //             }
+        //         },
+        //         {
+        //             type: 'Feature',
+        //             properties: {
+        //                 name: 'Bandung',
+        //                 description: 'Lokasi gw',
+        //                 links: 'https://www.example.com',
+        //                 status: 'Sudah Diperbaiki'
+        //             },
+        //             geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [107.6643171912623, -6.962141595962189]
+        //             }
+        //         },
+        //         {
+        //             type: 'Feature',
+        //             properties: {
+        //                 name: 'Bandung',
+        //                 description: 'Tegallega',
+        //                 links: 'https://www.example.com',
+        //                 status: 'Sudah Diperbaiki'
+        //             },
+        //             geometry: {
+        //                 type: 'Point',
+        //                 coordinates: [107.60319073076269, -6.937085780664934]
+        //             }
+        //         },
+        //         // Add more points within Indonesia here
+        //     ]
+        //     };
 
             // Initialize the map and geolocation
             var map = new ol.Map({
@@ -176,17 +185,38 @@
                 }),
             }),
         });
+        var vectorLayerGrey = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [],
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: '{{ URL::asset('/assets/icons/grey-pin.png') }}', // Replace with your custom pin icon image path
+                    scale: 0.08,
+                }),
+                text: new ol.style.Text({
+                    text: '',
+                    font: '12px sans-serif',
+                    offsetX: 0,
+                    offsetY: -20,
+                    fill: new ol.style.Fill({ color: '#000000' }),
+                    stroke: new ol.style.Stroke({ color: '#FFFFFF', width: 2 }),
+                }),
+            }),
+        });
         
         // Add the vector layer to the map
         map.addLayer(vectorLayer);
+        map.addLayer(vectorLayerGrey);
 
-        function openPopup(coordinates, latitude, longitude, name, description, links) {
+        function openPopup(coordinates, latitude, longitude, name, description, links, status) {
             var popupContent = document.getElementById('popup-content');
-            popupContent.innerHTML = '<h3>' + name + '</h3>'
-            popupContent.innerHTML += '<p>' + description + '</p>'
-            popupContent.innerHTML += '<a href="' + links + '" target="_blank">Cek Laporan</a>';
-            popupContent.innerHTML += '<p> latitude : ' + latitude + '</p>'
-            popupContent.innerHTML += '<p> longitude : ' + longitude + '</p>'
+            popupContent.innerHTML = '<h3 class="blacker">' + name + '</h3>'
+            popupContent.innerHTML += '<a class="blacker text-decoration-none" href="' + links + '" target="_blank">Cek Laporan</a>';
+            popupContent.innerHTML += '<p> class="blacker" status : ' + status + '</p>'
+            popupContent.innerHTML += '<p> class="blacker" latitude : ' + latitude + '...</p>'
+            popupContent.innerHTML += '<p> class="blacker" longitude : ' + longitude + '...</p>'
 
             popupOverlay.setPosition(coordinates);
         }
@@ -205,8 +235,9 @@
                 var name = feature.get('name');
                 var description = feature.get('description');
                 var links = feature.get('links');
+                var status = feature.get('status');
 
-                openPopup(coordinates, latitude, longitude, name, description, links);
+                openPopup(coordinates, latitude, longitude, name, description, links, status);
             });
         });
 
@@ -224,9 +255,13 @@
                 name: point.properties.name,
                 description: point.properties.description,
                 links: point.properties.links,
+                status: point.properties.status,
             });
-
-            vectorLayer.getSource().addFeature(marker);
+            if (point.properties.status == 1){
+                vectorLayer.getSource().addFeature(marker);
+            }else{
+                vectorLayerGrey.getSource().addFeature(marker);
+            }
         });
 
         var popupOverlay = new ol.Overlay({
@@ -278,6 +313,4 @@
         // Start tracking the user's location
         // geolocation.setTracking(true);
       </script>
-      
-</body>
-</html>
+@endsection

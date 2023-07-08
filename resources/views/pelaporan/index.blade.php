@@ -18,7 +18,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
-                                        <th>Nama Proyek</th>
+                                        <th>Panjang Perbaikan</th>
+                                        <th>Lebar Perbaikan</th>
                                         <th>Nama Lokasi</th>
                                         <th>Nama Perusahaan</th>
                                         <th>Longitude</th>
@@ -37,7 +38,8 @@
                                     @foreach ($pelaporans as $pelaporan => $value)
                                         <tr>
                                             <td>{{ $no }}</td>
-                                            <td>{{ $value->nama_proyek }}</td>
+                                            <td>{{ $value->panjang_perbaikan }}</td>
+                                            <td>{{ $value->lebar_perbaikan }}</td>
                                             <td>{{ $value->nama_lokasi }}</td>
                                             <td>{{ $value->nama_company }}</td>
                                             <td>{{ $value->longitude }}</td>

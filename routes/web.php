@@ -24,5 +24,5 @@ Auth::routes(['login' => false]);
 
 Route::resource('pelaporan',PelaporanController::class);
 
-Route::get('/map', 'App\Http\Controllers\Api\MapController@index');
+Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
 Route::post('/save-coordinates', 'App\Http\Controllers\Api\MapController@saveCoordinates');
