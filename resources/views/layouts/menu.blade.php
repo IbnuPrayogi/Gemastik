@@ -65,7 +65,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img src="{{ asset('assets/images/LogoKM.svg') }}" alt="logo-km-itera" class="brand-image">
+        <img src="{{ asset('assets/images/LogoKM.svg') }}" alt="logo-daraka" class="brand-image">
         <span class="">Daraka</span>
     </a>
 
@@ -121,7 +121,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a role="button" class="nav-link {{ Request::routeIs('admin.beasiswa.*') ? 'active' : '' }}">
+                    <a role="button" class="nav-link {{ Request::routeIs('pelaporan.*') ? 'active' : '' }}">
                       <i class="nav-icon fas fa-solid fa-book-atlas"></i>
                         <p>
                             Laporan Perbaikan
@@ -130,13 +130,13 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ Request::routeIs('admin.beasiswa.create') ? 'active' : '' }}">
+                            <a href="{{ route('pelaporan.create') }}" class="nav-link {{ Request::routeIs('pelaporan.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tambah Laporan</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ Request::routeIs('admin.beasiswa.index') ? 'active' : '' }}">
+                            <a href="{{ route('pelaporan.index') }}" class="nav-link {{ Request::routeIs('pelaporan.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kelola Laporan</p>
                             </a>
@@ -144,7 +144,7 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a role="button" class="nav-link {{ Request::routeIs('admin.alumni.*') ? 'active' : '' }}">
+                    <a role="button" class="nav-link {{ Request::routeIs('map.*') ? 'active' : '' }}">
                         <i class="nav-icon fas fa-solid fa-map-location-dot"></i>
                         <p>
                             Analisis Map
@@ -153,15 +153,15 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ Request::routeIs('admin.alumni.create') ? 'active' : '' }}">
+                            <a href="/map" class="nav-link {{ Request::routeIs('map.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Tampilan Map</p>
+                                <p>Berdasarkan Status</p>
                             </a>
                         </li>
                         <li class="nav-item">
                             <a href="" class="nav-link {{ Request::routeIs('admin.alumni.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
-                                <p>Tabel Map</p>
+                                <p>Berdasarkan Panjang</p>
                             </a>
                         </li>
                     </ul>
