@@ -65,7 +65,7 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
     <a href="/" class="brand-link">
-        <img src="{{ asset('assets/images/LogoKM.svg') }}" alt="logo-daraka" class="brand-image">
+        <img src="{{ asset('assets/images/') }}" alt="logo-daraka" class="brand-image">
         <span class="">Daraka</span>
     </a>
 
@@ -74,8 +74,12 @@
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 mb-3">
             <div class="info flex-row">
-                <img src="{{ asset('assets/images/user.svg') }}" alt="icon-user" class="brand-image">
-                <a href="" class="mx-3">Nama Pengguna</a>
+                <img src="{{ asset('assets/icons/user.svg') }}" alt="icon-user" class="brand-image">
+                @if (Auth::user())
+                    <a href="" class="mx-3 text-decoration-none">{{ Auth::user()->nama_pemilik }}</a>
+                @else
+                    <a href="" class="mx-3 text-decoration-none">Unauthorized</a>
+                @endif
             </div>
         </div>
 
@@ -96,10 +100,8 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
-                <!-- Add icons to the links using the .nav-icon class
-             with font-awesome or any other icon font library -->
                 <li class="nav-item">
-                    <a role="button" class="nav-link {{ Request::routeIs('user.*') ? 'active' : '' }}">
+                    <a role="button" class="nav-link {{ Request::routeIs('admin.user.*') ? 'active' : '' }}">
                       <i class="nav-icon fas fa-solid fa-users"></i>
                         <p>
                             User
@@ -108,21 +110,25 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('user.create') }}" class="nav-link {{ Request::routeIs('user.create') ? 'active' : '' }}">
+                            <a href="{{ route('admin.user.create') }}" class="nav-link {{ Request::routeIs('admin.user.create') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Tambah User</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('user.index') }}" class="nav-link {{ Request::routeIs('user.index') ? 'active' : '' }}">
+                            <a href="{{ route('admin.user.index') }}" class="nav-link {{ Request::routeIs('admin.user.index') ? 'active' : '' }}">
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kelola Data User</p>
                             </a>
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a role="button" class="nav-link {{ Request::routeIs('pelaporan.*') ? 'active' : '' }}">
-                      <i class="nav-icon fas fa-solid fa-book-atlas"></i>
+                @if (Auth::user()->id_roles == 11)
+                    <a role="button" class="nav-link {{ Request::routeIs('admin.laporan.*') ? 'active' : '' }}">
+                @else
+                    <a role="button" class="nav-link {{ Request::routeIs('client.laporan.*') ? 'active' : '' }}">
+                @endif
+                    <i class="nav-icon fas fa-solid fa-book-atlas"></i>
                         <p>
                             Laporan Perbaikan
                             <i class="right fas fa-angle-left"></i>
@@ -130,13 +136,21 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="{{ route('pelaporan.create') }}" class="nav-link {{ Request::routeIs('pelaporan.create') ? 'active' : '' }}">
-                                <i class="far fa-circle nav-icon"></i>
-                                <p>Tambah Laporan</p>
+                            @if (Auth::user()->id_roles == 11)
+                                <a href="{{ route('admin.laporan.create') }}" class="nav-link {{ Request::routeIs('admin.laporan.create') ? 'active' : '' }}">
+                            @else
+                                <a href="{{ route('client.laporan.create') }}" class="nav-link {{ Request::routeIs('client.laporan.create') ? 'active' : '' }}">
+                            @endif
+                            <i class="far fa-circle nav-icon"></i>
+                            <p>Tambah Laporan</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="{{ route('pelaporan.index') }}" class="nav-link {{ Request::routeIs('pelaporan.index') ? 'active' : '' }}">
+                            @if (Auth::user()->id_roles == 11)
+                                <a href="{{ route('admin.laporan.index') }}" class="nav-link {{ Request::routeIs('admin.laporan.index') ? 'active' : '' }}">
+                            @else
+                                <a href="{{ route('client.laporan.index') }}" class="nav-link {{ Request::routeIs('client.laporan.index') ? 'active' : '' }}">
+                            @endif
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Kelola Laporan</p>
                             </a>
@@ -144,7 +158,11 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a role="button" class="nav-link {{ Request::routeIs('map.*') ? 'active' : '' }}">
+                @if (Auth::user()->id_roles == 11)
+                    <a role="button" class="nav-link {{ Request::routeIs('admin.map.*') ? 'active' : '' }}">
+                @elseif (Auth::user()->id_roles == 99)
+                    <a role="button" class="nav-link {{ Request::routeIs('client.map.*') ? 'active' : '' }}">
+                @endif
                         <i class="nav-icon fas fa-solid fa-map-location-dot"></i>
                         <p>
                             Analisis Map
@@ -153,7 +171,11 @@
                     </a>
                     <ul class="nav nav-treeview">
                         <li class="nav-item">
-                            <a href="/map" class="nav-link {{ Request::routeIs('map.index') ? 'active' : '' }}">
+                            @if (Auth::user()->id_roles == 11)
+                                <a href="{{ route('admin.map.index') }}" class="nav-link {{ Request::routeIs('admin.map.index') ? 'active' : '' }}">
+                            @else
+                                <a href="{{ route('client.map.index') }}" class="nav-link {{ Request::routeIs('client.map.index') ? 'active' : '' }}">
+                            @endif
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Berdasarkan Status</p>
                             </a>

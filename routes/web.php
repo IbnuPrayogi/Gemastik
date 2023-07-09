@@ -18,11 +18,18 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('/', 'App\Http\Controllers\Auth\LoginController@login');
-Route::resource('/user', UserController::class);
 Auth::routes(['login' => false]);
 
-
-Route::resource('pelaporan',PelaporanController::class);
-
-Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
-Route::post('/save-coordinates', 'App\Http\Controllers\Api\MapController@saveCoordinates');
+Route::middleware(['auth'])->group(function () {
+    Route::middleware(['admin'])->name('admin.')->prefix('admin')->group(function () {
+        Route::resource('/user', UserController::class);
+        Route::resource('/laporan',PelaporanController::class);
+        Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
+    });
+    Route::middleware(['kontraktor'])->name('client.')->prefix('client')->group(function () {
+        Route::resource('/user', UserController::class);
+        Route::resource('/laporan',PelaporanController::class);
+        Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
+    });
+    Route::post('/save-coordinates', 'App\Http\Controllers\Api\MapController@saveCoordinates');
+});

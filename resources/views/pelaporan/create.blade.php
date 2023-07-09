@@ -26,7 +26,7 @@
                                         <th>Created at</th>
                                         <th>More</th>-->
                         <!-- form start -->
-                        <form method="POST" action="{{ route('pelaporan.store') }}" enctype='multipart/form-data'>
+                        <form method="POST" action="{{ route('client.laporan.store') }}" enctype='multipart/form-data'>
                             @csrf
                             @method('POST')
                             <div class="card-body">

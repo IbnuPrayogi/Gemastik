@@ -48,10 +48,10 @@
                                             <td>{{ $value->status }}</td>
                                             <td>{{ $value->created_at }}</td>
                                             <td class="justify-content-center d-flex">
-                                                <a href="{{ route('user.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
+                                                <a href="{{ route('admin.user.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('user.edit', $value->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
+                                                <a href="{{ route('admin.user.edit', $value->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
@@ -73,7 +73,7 @@
                                                                 "{{ $value->nama_company }}"
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <form action="{{ route('user.destroy', $value->id) }}"
+                                                                <form action="{{ route('admin.user.destroy', $value->id) }}"
                                                                     method="POST">
                                                                     @method('DELETE')
                                                                     @csrf

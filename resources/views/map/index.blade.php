@@ -29,7 +29,7 @@
         .ol-popup:after,
         .ol-popup:before {
             top: 100%;
-            left: 23%;
+            left: 24%;
             border: solid transparent;
             content: ' ';
             height: 0;
@@ -213,10 +213,16 @@
         function openPopup(coordinates, latitude, longitude, name, description, links, status) {
             var popupContent = document.getElementById('popup-content');
             popupContent.innerHTML = '<h3 class="blacker">' + name + '</h3>'
-            popupContent.innerHTML += '<a class="blacker text-decoration-none" href="' + links + '" target="_blank">Cek Laporan</a>';
-            popupContent.innerHTML += '<p> class="blacker" status : ' + status + '</p>'
-            popupContent.innerHTML += '<p> class="blacker" latitude : ' + latitude + '...</p>'
-            popupContent.innerHTML += '<p> class="blacker" longitude : ' + longitude + '...</p>'
+            popupContent.innerHTML += '<a class="text-primary text-decoration-none" href="' + links + '" target="_blank">Cek Laporan</a>';
+            if(status == 1){
+                popupContent.innerHTML += '<p class="blacker my-0">  status : Belum Diperbaiki</p>'
+            }else if(status == 2){
+                popupContent.innerHTML += '<p class="blacker my-0">  status : Proses Perbaikan</p>'
+            }else if(status == 3){
+                popupContent.innerHTML += '<p class="blacker my-0">  status : Sudah Diperbaiki</p>'
+            }
+            popupContent.innerHTML += '<p class="blacker my-0">  latitude : ' + latitude + '...</p>'
+            popupContent.innerHTML += '<p class="blacker my-0">  longitude : ' + longitude + '...</p>'
 
             popupOverlay.setPosition(coordinates);
         }

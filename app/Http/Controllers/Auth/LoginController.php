@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -26,7 +27,25 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+    protected function redirectTo()
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            if ($user->id_roles == 11) {
+                return RouteServiceProvider::ADMIN;
+            } elseif ($user->id_roles == 99) {
+                return RouteServiceProvider::CLIENT;
+            }
+        }
+        return RouteServiceProvider::HOME;
+    }
+
+    public function logout()
+{
+    Auth::logout();
+
+    return redirect('/'); // Redirect ke halaman yang diinginkan setelah logout
+}
 
     /**
      * Create a new controller instance.

@@ -49,45 +49,55 @@
                                             <td>{{ $value->tgl_end}}</td>
                                             <td>{{ $value->created_at }}</td>
                                             <td class="justify-content-center d-flex">
-                                                <a href="{{ route('pelaporan.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
+                                                @if (Auth::user()->id_roles == 11)
+                                                    <a href="{{ route('admin.laporan.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
+                                                @else
+                                                    <a href="{{ route('client.laporan.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
+                                                @endif
                                                     <i class="fa-solid fa-eye"></i>
                                                 </a>
-                                                <a href="{{ route('pelaporan.edit', $value->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
+                                                @if (Auth::user()->id_roles == 11)
+                                                    <a href="{{ route('admin.laporan.edit', $value->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
+                                                @elseif (Auth::user()->id_roles == 99 && $value->status < 3)
+                                                    <a href="{{ route('client.laporan.edit', $value->id) }}"class="mx-1 btn-sm btn-light text-decoration-none">
+                                                @endif
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
-                                                <!-- Button trigger modal -->
-                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}">
-                                                    <i class="fa-solid fa-trash-can"></i>
-                                                </a>
-                                                <!-- Modal -->
-                                                <div id="hapus-{{ $value->id }}" class="modal fade" tabindex="-1"
-                                                    role="dialog" aria-hidden="true">
-                                                    <div class="modal-dialog bd-danger">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="staticBackdropLabel">
-                                                                    <strong>Hapus Laporan</strong>
-                                                                </h5>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Apakah Anda yakin ingin menghapus laporan ini? <br>
-                                                                "{{ $value->nama_proyek }}"
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <form action="{{ route('pelaporan.destroy', $value->id) }}"
-                                                                    method="POST">
-                                                                    @method('DELETE')
-                                                                    @csrf
-                                                                    <input type="submit" class="btn btn-danger light"
-                                                                        name="" id="" value="Hapus">
-                                                                    <button type="button" class="btn btn-primary"
-                                                                        data-dismiss="modal">Tidak</button>
-                                                                </form>
+                                                @if (Auth::user()->id_roles == 99 && $value->status < 2)
+                                                    <!-- Button trigger modal -->
+                                                    <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}">
+                                                        <i class="fa-solid fa-trash-can"></i>
+                                                    </a>
+                                                    <!-- Modal -->
+                                                    <div id="hapus-{{ $value->id }}" class="modal fade" tabindex="-1"
+                                                        role="dialog" aria-hidden="true">
+                                                        <div class="modal-dialog bd-danger">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                                                        <strong>Hapus Laporan</strong>
+                                                                    </h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Apakah Anda yakin ingin menghapus laporan ini? <br>
+                                                                    "{{ $value->nama_proyek }}"
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <form action="{{ route('laporan.destroy', $value->id) }}"
+                                                                        method="POST">
+                                                                        @method('DELETE')
+                                                                        @csrf
+                                                                        <input type="submit" class="btn btn-danger light"
+                                                                            name="" id="" value="Hapus">
+                                                                        <button type="button" class="btn btn-primary"
+                                                                            data-dismiss="modal">Tidak</button>
+                                                                    </form>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <!-- /.modal -->
+                                                    <!-- /.modal -->
+                                                @endif
                                             </td>
                                         </tr>
                                         @php

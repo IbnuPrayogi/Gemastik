@@ -16,7 +16,7 @@ class Kontraktor
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && auth()->user()->roles_id == 99) {
+        if (Auth::check() && auth()->user()->id_roles == 99) {
             return $next($request);
         } else {
             return redirect('login');
