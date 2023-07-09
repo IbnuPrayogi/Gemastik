@@ -21,9 +21,9 @@ class MapController extends Controller
             $jsonData['features'][] = [
                 'type' => 'Feature',
                 'properties' => [
-                    'name' => $value->nama_lokasi,
+                    'name' => Str::limit($value->nama_lokasi, 10),
                     'description' => $value->nama_company,
-                    'links' => '/pelaporan' . Str::of($value->id)->prepend('/'),
+                    'links' => '/laporan' . Str::of($value->id)->append('/'),
                     'status' => $value->status
                 ],
                 'geometry' => [

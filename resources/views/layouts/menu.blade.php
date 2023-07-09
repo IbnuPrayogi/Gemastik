@@ -64,8 +64,8 @@
 <!-- Main Sidebar Container -->
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="/" class="brand-link">
-        <img src="{{ asset('assets/images/') }}" alt="logo-daraka" class="brand-image">
+    <a href="/" class="brand-link text-center text-decoration-none">
+        <img src="{{ asset('assets/images/') }}" alt="" class="brand-image">
         <span class="">Daraka</span>
     </a>
 
@@ -135,16 +135,14 @@
                         </p>
                     </a>
                     <ul class="nav nav-treeview">
+                        @if (Auth::user()->id_roles == 99)
                         <li class="nav-item">
-                            @if (Auth::user()->id_roles == 11)
-                                <a href="{{ route('admin.laporan.create') }}" class="nav-link {{ Request::routeIs('admin.laporan.create') ? 'active' : '' }}">
-                            @else
-                                <a href="{{ route('client.laporan.create') }}" class="nav-link {{ Request::routeIs('client.laporan.create') ? 'active' : '' }}">
-                            @endif
-                            <i class="far fa-circle nav-icon"></i>
-                            <p>Tambah Laporan</p>
+                            <a href="{{ route('client.laporan.create') }}" class="nav-link {{ Request::routeIs('client.laporan.create') ? 'active' : '' }}">
+                                <i class="far fa-circle nav-icon"></i>
+                                <p>Tambah Laporan</p>
                             </a>
                         </li>
+                        @endif
                         <li class="nav-item">
                             @if (Auth::user()->id_roles == 11)
                                 <a href="{{ route('admin.laporan.index') }}" class="nav-link {{ Request::routeIs('admin.laporan.index') ? 'active' : '' }}">

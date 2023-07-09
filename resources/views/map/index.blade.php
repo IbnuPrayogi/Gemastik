@@ -79,70 +79,14 @@
             <div id="popup-content"></div>
         </div>
     </div>
-
+    @php
+        $roles = Auth::user()->id_roles;
+    @endphp
     <script src="{{ asset('ol/dist/ol.js') }}"></script>
     <script>
         // JSON data with point coordinates
         var jsonData = {!! $jsonData !!};
-        // {
-        //     type: 'FeatureCollection',
-        //     features: [
-        //         {
-        //             type: 'Feature',
-        //             properties: {
-        //                 name: 'Jakarta',
-        //                 description: 'Capital city of Indonesia',
-        //                 links: 'https://www.example.com',
-        //                 status: 'Sudah Diperbaiki'
-        //             },
-        //             geometry: {
-        //                 type: 'Point',
-        //                 coordinates: [106.8272, -6.1751]
-        //             }
-        //         },
-        //         {
-        //             type: 'Feature',
-        //             properties: {
-        //                 name: 'Bali',
-        //                 description: 'Popular tourist destination',
-        //                 links: 'https://www.example.com',
-        //                 status: 'Proses Perbaikan'
-        //             },
-        //             geometry: {
-        //                 type: 'Point',
-        //                 coordinates: [115.1628, -8.3405]
-        //             }
-        //         },
-        //         {
-        //             type: 'Feature',
-        //             properties: {
-        //                 name: 'Bandung',
-        //                 description: 'Lokasi gw',
-        //                 links: 'https://www.example.com',
-        //                 status: 'Sudah Diperbaiki'
-        //             },
-        //             geometry: {
-        //                 type: 'Point',
-        //                 coordinates: [107.6643171912623, -6.962141595962189]
-        //             }
-        //         },
-        //         {
-        //             type: 'Feature',
-        //             properties: {
-        //                 name: 'Bandung',
-        //                 description: 'Tegallega',
-        //                 links: 'https://www.example.com',
-        //                 status: 'Sudah Diperbaiki'
-        //             },
-        //             geometry: {
-        //                 type: 'Point',
-        //                 coordinates: [107.60319073076269, -6.937085780664934]
-        //             }
-        //         },
-        //         // Add more points within Indonesia here
-        //     ]
-        //     };
-
+        var roles = {!! $roles !!};
             // Initialize the map and geolocation
             var map = new ol.Map({
             target: 'map',
@@ -212,8 +156,12 @@
 
         function openPopup(coordinates, latitude, longitude, name, description, links, status) {
             var popupContent = document.getElementById('popup-content');
-            popupContent.innerHTML = '<h3 class="blacker">' + name + '</h3>'
-            popupContent.innerHTML += '<a class="text-primary text-decoration-none" href="' + links + '" target="_blank">Cek Laporan</a>';
+            popupContent.innerHTML = '<h4 class="blacker">' + name + '</h4>'
+            if(roles == 11){
+                popupContent.innerHTML += '<a class="text-primary text-decoration-none" href="/admin' + links + '" target="_blank">Cek Laporan</a>';
+            }else if(roles == 99){
+                popupContent.innerHTML += '<a class="text-primary text-decoration-none" href="/client' + links + '" target="_blank">Cek Laporan</a>';
+            }
             if(status == 1){
                 popupContent.innerHTML += '<p class="blacker my-0">  status : Belum Diperbaiki</p>'
             }else if(status == 2){
@@ -221,8 +169,8 @@
             }else if(status == 3){
                 popupContent.innerHTML += '<p class="blacker my-0">  status : Sudah Diperbaiki</p>'
             }
-            popupContent.innerHTML += '<p class="blacker my-0">  latitude : ' + latitude + '...</p>'
-            popupContent.innerHTML += '<p class="blacker my-0">  longitude : ' + longitude + '...</p>'
+            popupContent.innerHTML += '<p class="blacker my-0">  latitude : ' + latitude.substring(0,7) + '...</p>'
+            popupContent.innerHTML += '<p class="blacker my-0">  longitude : ' + longitude.substring(0,7) + '...</p>'
 
             popupOverlay.setPosition(coordinates);
         }
@@ -234,7 +182,6 @@
         
         map.on('click', function (event) {
             map.forEachFeatureAtPixel(event.pixel, function (feature) {
-                console.log(coordinates);
                 var coordinates = feature.getGeometry().getCoordinates();
                 var latitude = feature.get('latitude');
                 var longitude = feature.get('longitude');

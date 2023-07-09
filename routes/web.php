@@ -18,12 +18,15 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'App\Http\Controllers\Auth\LoginController@showLoginForm')->name('login');
 Route::post('/', 'App\Http\Controllers\Auth\LoginController@login');
-Auth::routes(['login' => false]);
+Auth::routes(['login' => false,
+    'register' => false,
+    'reset' => false,
+    'verify' => false,]);
 
 Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->name('admin.')->prefix('admin')->group(function () {
         Route::resource('/user', UserController::class);
-        Route::resource('/laporan',PelaporanController::class);
+        Route::resource('/laporan',PelaporanController::class)->except(['create','store']);
         Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
     });
     Route::middleware(['kontraktor'])->name('client.')->prefix('client')->group(function () {

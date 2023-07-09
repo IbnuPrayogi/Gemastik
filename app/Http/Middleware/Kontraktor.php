@@ -19,7 +19,7 @@ class Kontraktor
         if (Auth::check() && auth()->user()->id_roles == 99) {
             return $next($request);
         } else {
-            return redirect('login');
+            return redirect('/');
         }
     }
 }

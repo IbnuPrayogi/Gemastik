@@ -20,5 +20,10 @@ class UserSeeder extends Seeder
             'nama_company' => 'Test User',
             'email' => 'test@example.com',
         ]);
+        User::factory()->create([
+            'id_roles' => 99,
+            'nama_company' => 'Test User',
+            'email' => 'admin@admin.com',
+        ]);
     }
 }

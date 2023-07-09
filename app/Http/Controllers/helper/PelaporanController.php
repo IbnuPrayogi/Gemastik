@@ -7,6 +7,7 @@ use App\Models\Pelaporan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -17,7 +18,11 @@ class PelaporanController extends Controller
      */
     public function index()
     {
-        $pelaporans=Pelaporan::all();
+        if (Auth::user()->id_roles == 11) {
+            $pelaporans=Pelaporan::all();
+        }else if (Auth::user()->id_roles == 99) {
+            $pelaporans=Pelaporan::where('unique_id',Auth::user()->id)->get();
+        }
         return view('pelaporan.index',compact('pelaporans'));
     }
 
@@ -26,7 +31,11 @@ class PelaporanController extends Controller
      */
     public function create()
     {
-        return view('pelaporan.create');
+        if (Auth::user()->id_roles == 99) {
+            return view('pelaporan.create');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**

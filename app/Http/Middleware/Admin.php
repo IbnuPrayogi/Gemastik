@@ -19,7 +19,7 @@ class Admin
         if (Auth::check() && auth()->user()->id_roles == 11) {
             return $next($request);
         } else {
-            return redirect('login');
+            return redirect('/');
         }
     }
 }

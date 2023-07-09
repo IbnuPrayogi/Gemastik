@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah User')
+@section('title', 'Buat Laporan')
 
 @section('content')
     <!-- Main content -->
@@ -41,43 +41,48 @@
                                 </div> --}}
 
                                 <div class="form-group">
-                                    <label for="email">Nama Proyek</label>
-                                    <input name="nama_proyek" type="text" class="form-control" id="nama_proyek"
-                                        placeholder="Masukan Nama Proyek" required>
-                                </div>
-                                <div class="form-group">
                                     <label for="nama_lokasi">Nama Lokasi</label>
-                                    <input name="nama_lokasi" class="form-control" id="nama_lokasi" placeholder="Masukkan Nama Lokasi..."
-                                        required>
+                                    <input name="nama_lokasi" class="form-control" id="nama_lokasi" placeholder="Nama Lokasi" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="password">Nama Perusahaan</label>
-                                    <input name="nama_company" type="nama_company" class="form-control" id="nama_company"
-                                        placeholder="Masukan Nama Perusahaan">
+                                    <label for="nama_company">Nama Perusahaan</label>
+                                    <input name="nama_company" type="text" class="form-control text-white" id="nama_company"
+                                    value="{{ Auth::user()->nama_company }}" disabled>
+                                    <input name="nama_company" type="hidden" class="form-control" id="nama_company"
+                                    value="{{ Auth::user()->nama_company }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="panjang_perbaikan">Panjang Perbaikan</label>
+                                    <div class="input-group">
+                                        <input name="panjang_perbaikan" type="text" class="form-control" id="panjang_perbaikan" value="1" required>
+                                        <span class="input-group-text">Meter</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lebar_perbaikan">Lebar Perbaikan</label>
+                                    <div class="input-group">
+                                        <input name="lebar_perbaikan" type="text" class="form-control" id="lebar_perbaikan" value="1" required>
+                                        <span class="input-group-text">Meter</span>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="nama">Longitude</label>
-                                    <input name="longitude" class="form-control" id="longitude" placeholder="Masukkan longitude..."
+                                    <input name="longitude" class="form-control" id="longitude" placeholder="" value=""
                                         required>
                                 </div>
                                 <div class="form-group">
                                     <label for="latitude">Latitude</label>
-                                    <input name="latitude" class="form-control" id="latitude" placeholder="Masukkan latitude..."
+                                    <input name="latitude" class="form-control" id="latitude" placeholder="" value=""
                                         required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="foto">Foto</label>
-                                    <input type="file" name="foto" class="form-control" id="foto" placeholder="Masukkan Foto..."
-                                       accept="image/*" required multiple>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tgl_start">Tanggal Dimulai</label>
-                                    <input type="datetime-local" name="tgl_start" class="form-control" id="tgl_start" placeholder="Masukkan Tanggal Dimulai..."
+                                    <label for="tgl_end">Tanggal Mulai</label>
+                                    <input type="datetime" name="tgl_start" class="form-control" id="tgl_start" placeholder="" value=""
                                         required>
                                 </div>
                                 <div class="form-group">
                                     <label for="tgl_end">Tanggal Selesai</label>
-                                    <input type="datetime-local" name="tgl_end" class="form-control" id="tgl_end" placeholder="Masukkan Tanggal Selesai..."
+                                    <input type="datetime" name="tgl_end" class="form-control" id="tgl_end" placeholder="" value=""
                                         required>
                                 </div>
                             </div>
