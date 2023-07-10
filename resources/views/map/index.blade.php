@@ -116,7 +116,7 @@
             style: new ol.style.Style({
                 image: new ol.style.Icon({
                     anchor: [0.5, 1],
-                    src: '{{ URL::asset('/assets/icons/pin.png') }}', // Replace with your custom pin icon image path
+                    src: '{{ URL::asset('/assets/icons/red-pin.png') }}',
                     scale: 0.08,
                 }),
                 text: new ol.style.Text({
@@ -136,16 +136,32 @@
             style: new ol.style.Style({
                 image: new ol.style.Icon({
                     anchor: [0.5, 1],
-                    src: '{{ URL::asset('/assets/icons/grey-pin.png') }}', // Replace with your custom pin icon image path
+                    src: '{{ URL::asset('/assets/icons/grey-pin.png') }}',
                     scale: 0.08,
                 }),
-                text: new ol.style.Text({
-                    text: '',
-                    font: '12px sans-serif',
-                    offsetX: 0,
-                    offsetY: -20,
-                    fill: new ol.style.Fill({ color: '#000000' }),
-                    stroke: new ol.style.Stroke({ color: '#FFFFFF', width: 2 }),
+            }),
+        });
+        var vectorLayerOrange = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [],
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: '{{ URL::asset('/assets/icons/orange-pin.png') }}',
+                    scale: 0.08,
+                }),
+            }),
+        });
+        var vectorLayerGold = new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [],
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 1],
+                    src: '{{ URL::asset('/assets/icons/gold-pin.png') }}',
+                    scale: 0.08,
                 }),
             }),
         });
@@ -153,6 +169,8 @@
         // Add the vector layer to the map
         map.addLayer(vectorLayer);
         map.addLayer(vectorLayerGrey);
+        map.addLayer(vectorLayerOrange);
+        map.addLayer(vectorLayerGold);
 
         function openPopup(coordinates, latitude, longitude, name, description, links, status) {
             var popupContent = document.getElementById('popup-content');
@@ -226,44 +244,5 @@
 
         map.addOverlay(popupOverlay);
         
-        // Create and add points to the vector layer from the JSON data
-        // jsonData.forEach(function(point) {
-        //     var marker = new ol.Feature({
-        //         geometry: new ol.geom.Point(ol.proj.fromLonLat([point.lon, point.lat])),
-        //         name: 'Point ' + point.id,
-        //     });
-    
-        // vectorLayer.getSource().addFeature(marker);
-        // });
-    
-        // Track user's location
-        // geolocation.on('change:position', function() {
-        //     var coordinates = geolocation.getPosition();
-        //     var accuracy = geolocation.getAccuracy();
-        
-        //     // Clear previous user location feature
-        //     vectorLayer.getSource().clear();
-        
-            // Create a new feature for the user's location
-            // var userMarker = new ol.Feature({
-            //     geometry: new ol.geom.Point(coordinates),
-            //     name: 'Your Location',
-            // });
-        
-            // vectorLayer.getSource().addFeature(userMarker);
-        
-            // Update the HTML element with the coordinates 
-        //     document.getElementById('coordinates').innerHTML =
-        //     'Latitude: ' +
-        //     coordinates[1].toFixed(6) +
-        //     ', Longitude: ' +
-        //     coordinates[0].toFixed(6) +
-        //     ' (Accuracy: ' +
-        //     accuracy.toFixed(2) +
-        //     ' meters)';
-        // });
-      
-        // Start tracking the user's location
-        // geolocation.setTracking(true);
-      </script>
+    </script>
 @endsection

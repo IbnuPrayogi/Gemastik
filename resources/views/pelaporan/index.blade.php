@@ -46,8 +46,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
-                                        <th>Panjang Perbaikan</th>
-                                        <th>Lebar Perbaikan</th>
+                                        <th>Panjang Perbaikan (Meter)</th>
+                                        <th>Lebar Perbaikan (Meter)</th>
                                         <th>Nama Lokasi</th>
                                         <th>Nama Perusahaan</th>
                                         <th>Longitude</th>
@@ -55,7 +55,7 @@
                                         <th>Foto</th>
                                         <th>Tanggal Dimulai</th>
                                         <th>Tanggal Selesai</th>
-                                        <th>Created at</th>
+                                        <th>Status</th>
                                         <th>More</th>
                                     </tr>
                                 </thead>
@@ -72,10 +72,20 @@
                                             <td>{{ $value->nama_company }}</td>
                                             <td>{{ $value->longitude }}</td>
                                             <td>{{ $value->latitude }}</td>
-                                            <td>{{ $value->foto }}</td>
+                                            <td>{{ Str::limit($value->foto, 5) }}</td>
                                             <td>{{ $value->tgl_start }}</td>
-                                            <td>{{ $value->tgl_end}}</td>
-                                            <td>{{ $value->created_at }}</td>
+                                            @if ($value->tgl_end == null)
+                                                <td>Belum Selesai</td>
+                                            @else
+                                                <td>{{ $value->tgl_end}}</td>
+                                            @endif
+                                            @if ($value->status == 1)
+                                                <td>Belum Diperbaiki</td>
+                                            @elseif ($value->status == 2)
+                                                <td>Proses Perbaikan</td>
+                                            @elseif ($value->status == 3)
+                                                <td>Sudah Diperbaiki</td>
+                                            @endif
                                             <td class="justify-content-center d-flex">
                                                 @if (Auth::user()->id_roles == 11)
                                                     <a href="{{ route('admin.laporan.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">

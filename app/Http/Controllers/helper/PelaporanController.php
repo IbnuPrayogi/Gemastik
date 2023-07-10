@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -72,7 +73,7 @@ class PelaporanController extends Controller
             'panjang_perbaikan' => $request->panjang_perbaikan,
             'lebar_perbaikan' => $request->lebar_perbaikan,
             'nama_lokasi' => $request->nama_lokasi,
-            'nama_company' => $request->nama_company,
+            'nama_company' => Auth::user()->nama_company,
             'longitude' => $longitude,
             'latitude' => $latitude,
             'foto'=>$foto->hashName(),
@@ -90,8 +91,12 @@ class PelaporanController extends Controller
      */
     public function show(string $id)
     {
-        $pelaporan = Pelaporan::findOrFail($id);
-        return view('pelaporan.read', compact('pelaporan'));
+        try {
+            $pelaporan = Pelaporan::findOrFail($id);
+            return view('pelaporan.read', compact('pelaporan'));
+        } catch (ModelNotFoundException $e){
+            return redirect()->route('pelaporan.index');
+        }
     }
 
     /**
@@ -99,8 +104,12 @@ class PelaporanController extends Controller
      */
     public function edit(string $id)
     {
-        $pelaporan=Pelaporan::where('id',$id)->first();
-        return view('pelaporan.update',compact('pelaporan'));
+        try {
+            $pelaporan = Pelaporan::findOrFail($id);
+            return view('pelaporan.update', compact('pelaporan'));
+        } catch (ModelNotFoundException $e){
+            return redirect()->route('pelaporan.index');
+        }
     }
 
     /**
@@ -130,7 +139,6 @@ class PelaporanController extends Controller
         $data = Pelaporan::where('id', $id)->first();
         $data->delete();
 
-        Session::flash('success', 'Data User Berhasil DiHapus');
         $pelaporans=Pelaporan::all();
         return redirect()->back();
     }
