@@ -11,7 +11,8 @@ class Pelaporan extends Model
     protected $table = 'pelaporan';
     protected $fillable = [
         'unique_id',
-        'nama_proyek',
+        'panjang_perbaikan',
+        'lebar_perbaikan',
         'nama_lokasi',
         'nama_company',
         'longitude',
@@ -19,6 +20,7 @@ class Pelaporan extends Model
         'foto',
         'tgl_start',
         'tgl_end', 
+        'status',
     ];
 
     public function users()

@@ -14,32 +14,10 @@
                         <div class="card-header">
                             <h3 class="card-title">Tambah User baru</h3>
                         </div>
-                        <!-- /.card-header 
-                        <th style="width: 10px">No</th>
-                                        <th>Nama Company</th>
-                                        <th>Nama Pemilik</th>
-                                        <th>ID Pinpoint</th>
-                                        <th>Email</th>
-                                        <th>Rekening</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Created at</th>
-                                        <th>More</th>-->
-                        <!-- form start -->
                         <form method="POST" action="{{ route('client.laporan.store') }}" enctype='multipart/form-data'>
                             @csrf
                             @method('POST')
                             <div class="card-body">
-                                {{-- <div class="form-group">
-                                    <label for="id_role">Roles</label>
-                                    <select name="id_role" required class="custom-select form-control-border"
-                                        id="id_role">
-                                        <option selected>=== PILIH ROLE ===</option>
-                                        <option value="">SuperAdmin</option>
-                                        <option value="">OP</option>
-                                    </select>
-                                </div> --}}
-
                                 <div class="form-group">
                                     <label for="nama_lokasi">Nama Lokasi</label>
                                     <input name="nama_lokasi" class="form-control" id="nama_lokasi" placeholder="Nama Lokasi" required>
@@ -66,25 +44,23 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nama">Longitude</label>
-                                    <input name="longitude" class="form-control" id="longitude" placeholder="" value=""
+                                    <label for="coordinates">Longitude dan Latitude</label>
+                                    <input name="coordinates" class="form-control" id="coordinates" placeholder="contoh : -4.8893,113.9213" value=""
                                         required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="latitude">Latitude</label>
-                                    <input name="latitude" class="form-control" id="latitude" placeholder="" value=""
-                                        required>
+                                <div class="form-group"> 
+                                    <label for="foto">Upload Foto Lokasi</label>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="foto" name="foto" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="tgl_end">Tanggal Mulai</label>
-                                    <input type="datetime" name="tgl_start" class="form-control" id="tgl_start" placeholder="" value=""
+                                    <input type="datetime" name="tgl_start" class="form-control" id="tgl_start" value="{{ date('Y-m-d H:i:s') }}"
                                         required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="tgl_end">Tanggal Selesai</label>
-                                    <input type="datetime" name="tgl_end" class="form-control" id="tgl_end" placeholder="" value=""
-                                        required>
-                                </div>
+                                <input type="hidden" name="tgl_end" class="form-control" id="tgl_end" value=""
+                                    required>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">

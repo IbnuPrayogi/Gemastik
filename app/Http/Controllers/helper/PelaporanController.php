@@ -7,6 +7,7 @@ use App\Models\Pelaporan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -43,29 +44,44 @@ class PelaporanController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'foto' => 'required|mimes:jpeg,png,jpg,gif|max:5120 ',
+        $this->validate($request,[
+            'foto' => 'required|mimes:jpeg,png,jpg,gif|max:10280 ',
         ]);
-        
-        $file = $validatedData[('foto')];
-        $filename =  $file->getClientOriginalName();
-      
-        $location = '../public/assets/images/';
+        // store pohot
+        $foto = $request->file('foto');
+        $foto->storeAs('public/posts', $foto->hashName());
+
+        // validasi tanggal start
+        $postDate = Carbon::now();
+        $userDate = Carbon::parse($request->tgl_start);
+        $minutesDifference = $userDate->diffInMinutes($postDate);
+        if ($minutesDifference <= 60) {
+            $tgl_start = $request->tgl_start;
+        } else {
+            $tgl_start = Carbon::now();
+        }
+
+        // coordinate expoloder
+        $data = $request->coordinates;
+        $coordinates = explode(",", $data);
+
+        $longitude = $coordinates[0];
+        $latitude = $coordinates[1];
         Pelaporan::create([
-            'unique_id' => 1,
-            'nama_proyek' => $request->nama_proyek,
+            'unique_id' => Auth::user()->id,
+            'panjang_perbaikan' => $request->panjang_perbaikan,
+            'lebar_perbaikan' => $request->lebar_perbaikan,
             'nama_lokasi' => $request->nama_lokasi,
             'nama_company' => $request->nama_company,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-            'foto'=>$filename,
-            'tgl_start' => $request->tgl_start,
-            'tgl_end' => $request->tgl_end,
+            'longitude' => $longitude,
+            'latitude' => $latitude,
+            'foto'=>$foto->hashName(),
+            'tgl_start' => $tgl_start,
+            'tgl_end' => null,
+            'status' => "1",
         ]);
-
-        $file->move(public_path($location), $filename);
         // Session::flash('success', 'Data User Berhasil Ditambahkan');
-        return view('pelaporan.create');
+        return redirect()->route('pelaporan.index');
         
     }
 
