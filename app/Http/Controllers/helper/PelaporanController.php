@@ -49,7 +49,7 @@ class PelaporanController extends Controller
         ]);
         // store pohot
         $foto = $request->file('foto');
-        $foto->storeAs('public/posts', $foto->hashName());
+        $foto->storeAs('public/images', $foto->hashName());
 
         // validasi tanggal start
         $postDate = Carbon::now();
@@ -81,7 +81,7 @@ class PelaporanController extends Controller
             'status' => "1",
         ]);
         // Session::flash('success', 'Data User Berhasil Ditambahkan');
-        return redirect()->route('pelaporan.index');
+        return redirect()->route('client.laporan.index');
         
     }
 

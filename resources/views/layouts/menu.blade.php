@@ -100,6 +100,7 @@
         <nav class="mt-2">
             <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu"
                 data-accordion="false">
+                @if (Auth::user()->id_roles == 11)
                 <li class="nav-item">
                     <a role="button" class="nav-link {{ Request::routeIs('admin.user.*') ? 'active' : '' }}">
                       <i class="nav-icon fas fa-solid fa-users"></i>
@@ -122,6 +123,7 @@
                             </a>
                     </ul>
                 </li>
+                @endif
                 <li class="nav-item">
                 @if (Auth::user()->id_roles == 11)
                     <a role="button" class="nav-link {{ Request::routeIs('admin.laporan.*') ? 'active' : '' }}">

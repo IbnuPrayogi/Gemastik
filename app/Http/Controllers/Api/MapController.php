@@ -23,7 +23,7 @@ class MapController extends Controller
                 'properties' => [
                     'name' => Str::limit($value->nama_lokasi, 10),
                     'description' => $value->nama_company,
-                    'links' => '/laporan' . Str::of($value->id)->append('/'),
+                    'links' => '/laporan/' . Str::of($value->id),
                     'status' => $value->status
                 ],
                 'geometry' => [
