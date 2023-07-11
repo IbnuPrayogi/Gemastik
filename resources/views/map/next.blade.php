@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Map Berdasarkan Status')
+@section('title', 'Map Berdasarkan Panjang Perbaikan')
 @section('css')
     
     <style>
@@ -75,19 +75,19 @@
     <div class="d-flex container">
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/grey-pin.png') }}" alt="grey-pin">
-            Belum Diperbaiki
+            1 - 30 meter
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
-            <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/orange-pin.png') }}" alt="orange-pin">
-            Proses Perbaikan
+            <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/gold-pin.png') }}" alt="orange-pin">
+            31 - 80 meter
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
-            <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/red-pin.png') }}" alt="red-pin">
-            Sudah Diperbaiki
+            <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/orange-pin.png') }}" alt="red-pin">
+            81 - 100 meter
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
-            <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/gold-pin.png') }}" alt="gold-pin">
-            Laporan Selesai
+            <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/red-pin.png') }}" alt="gold-pin">
+            > 100 meter
         </div>
     </div>
     <div id="container">
@@ -190,7 +190,7 @@
         map.addLayer(vectorLayerOrange);
         map.addLayer(vectorLayerGold);
 
-        function openPopup(coordinates, latitude, longitude, name, description, links, status) {
+        function openPopup(coordinates, latitude, longitude, name, description, links, status, panjang_perbaikan) {
             var popupContent = document.getElementById('popup-content');
             popupContent.innerHTML = '<h4 class="blacker">' + name + '</h4>'
             if(roles == 11){
@@ -199,14 +199,15 @@
                 popupContent.innerHTML += '<a class="text-primary text-decoration-none" href="/client' + links + '" target="_blank">Cek Laporan</a>';
             }
             if(status == 1){
-                popupContent.innerHTML += '<p class="blacker my-0">  status : Belum Diperbaiki</p>'
+                popupContent.innerHTML += '<p class="blacker my-0">  Status : Belum Diperbaiki</p>'
             }else if(status == 2){
-                popupContent.innerHTML += '<p class="blacker my-0">  status : Proses Perbaikan</p>'
+                popupContent.innerHTML += '<p class="blacker my-0">  Status : Proses Perbaikan</p>'
             }else if(status == 3){
-                popupContent.innerHTML += '<p class="blacker my-0">  status : Sudah Diperbaiki</p>'
+                popupContent.innerHTML += '<p class="blacker my-0">  Status : Sudah Diperbaiki</p>'
             }
-            popupContent.innerHTML += '<p class="blacker my-0">  latitude : ' + latitude.substring(0,7) + '...</p>'
-            popupContent.innerHTML += '<p class="blacker my-0">  longitude : ' + longitude.substring(0,7) + '...</p>'
+            popupContent.innerHTML += '<p class="blacker my-0">  Panjang Perbaikan : ' + panjang_perbaikan + 'meter</p>'
+            popupContent.innerHTML += '<p class="blacker my-0">  Latitude : ' + latitude.substring(0,7) + '...</p>'
+            popupContent.innerHTML += '<p class="blacker my-0">  Longitude : ' + longitude.substring(0,7) + '...</p>'
 
             popupOverlay.setPosition(coordinates);
         }
@@ -225,8 +226,9 @@
                 var description = feature.get('description');
                 var links = feature.get('links');
                 var status = feature.get('status');
+                var panjang_perbaikan = feature.get('panjang_perbaikan');
 
-                openPopup(coordinates, latitude, longitude, name, description, links, status);
+                openPopup(coordinates, latitude, longitude, name, description, links, status, panjang_perbaikan);
             });
         });
 
@@ -245,15 +247,16 @@
                 description: point.properties.description,
                 links: point.properties.links,
                 status: point.properties.status,
+                panjang_perbaikan: point.properties.panjang_perbaikan,
             });
-            if (point.properties.status == 1){
-                vectorLayerGrey.getSource().addFeature(marker);
-            }else if(point.properties.status == 2){
-                vectorLayerOrange.getSource().addFeature(marker);
-            }else if(point.properties.status == 3){
+            if (point.properties.panjang_perbaikan > 100){
                 vectorLayerRed.getSource().addFeature(marker);
-            }else if(point.properties.status == 4){
+            }else if(point.properties.panjang_perbaikan > 80){
+                vectorLayerOrange.getSource().addFeature(marker);
+            }else if(point.properties.panjang_perbaikan > 30){
                 vectorLayerGold.getSource().addFeature(marker);
+            }else if(point.properties.panjang_perbaikan >= 1){
+                vectorLayerGrey.getSource().addFeature(marker);
             }
         });
 

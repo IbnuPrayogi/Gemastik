@@ -12,7 +12,11 @@ class MapController extends Controller
 {
     public function index()
     {
-        $jsonMap = Pelaporan::all();
+        if(auth()->user()->id_roles == 11){
+            $jsonMap = Pelaporan::all();
+        }else if(auth()->user()->id_roles == 99){
+            $jsonMap = Pelaporan::where('unique_id',auth()->user()->id)->get();
+        }
         $jsonData = [
             'type' => 'FeatureCollection',
             'features' => []
@@ -21,9 +25,9 @@ class MapController extends Controller
             $jsonData['features'][] = [
                 'type' => 'Feature',
                 'properties' => [
-                    'name' => $value->nama_lokasi,
+                    'name' => Str::limit($value->nama_lokasi, 10),
                     'description' => $value->nama_company,
-                    'links' => '/pelaporan' . Str::of($value->id)->prepend('/'),
+                    'links' => '/laporan/' . Str::of($value->id),
                     'status' => $value->status
                 ],
                 'geometry' => [
@@ -34,6 +38,37 @@ class MapController extends Controller
         }
         $jsonData = json_encode($jsonData);
         return view('map.index', compact('jsonData'));
+    }
+
+    public function next()
+    {
+        if(auth()->user()->id_roles == 11){
+            $jsonMap = Pelaporan::all();
+        }else if(auth()->user()->id_roles == 99){
+            $jsonMap = Pelaporan::where('unique_id',auth()->user()->id)->get();
+        }
+        $jsonData = [
+            'type' => 'FeatureCollection',
+            'features' => []
+        ];
+        foreach ($jsonMap as $key => $value) {
+            $jsonData['features'][] = [
+                'type' => 'Feature',
+                'properties' => [
+                    'name' => Str::limit($value->nama_lokasi, 10),
+                    'description' => $value->nama_company,
+                    'links' => '/laporan/' . Str::of($value->id),
+                    'status' => $value->status,
+                    'panjang_perbaikan' => $value->panjang_perbaikan,
+                ],
+                'geometry' => [
+                    'type' => 'Point',
+                    'coordinates' => [$value->latitude, $value->longitude]
+                ]
+            ];
+        }
+        $jsonData = json_encode($jsonData);
+        return view('map.next', compact('jsonData'));
     }
 
     public function saveCoordinates(Request $request)

@@ -7,6 +7,9 @@ use App\Models\Pelaporan;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -17,7 +20,11 @@ class PelaporanController extends Controller
      */
     public function index()
     {
-        $pelaporans=Pelaporan::all();
+        if (Auth::user()->id_roles == 11) {
+            $pelaporans=Pelaporan::all();
+        }else if (Auth::user()->id_roles == 99) {
+            $pelaporans=Pelaporan::where('unique_id',Auth::user()->id)->get();
+        }
         return view('pelaporan.index',compact('pelaporans'));
     }
 
@@ -26,7 +33,11 @@ class PelaporanController extends Controller
      */
     public function create()
     {
-        return view('pelaporan.create');
+        if (Auth::user()->id_roles == 99) {
+            return view('pelaporan.create');
+        }else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -34,29 +45,44 @@ class PelaporanController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'foto' => 'required|mimes:jpeg,png,jpg,gif|max:5120 ',
+        $this->validate($request,[
+            'foto' => 'required|mimes:jpeg,png,jpg,gif|max:10280 ',
         ]);
-        
-        $file = $validatedData[('foto')];
-        $filename =  $file->getClientOriginalName();
-      
-        $location = '../public/assets/images/';
-        Pelaporan::create([
-            'unique_id' => 1,
-            'nama_proyek' => $request->nama_proyek,
-            'nama_lokasi' => $request->nama_lokasi,
-            'nama_company' => $request->nama_company,
-            'longitude' => $request->longitude,
-            'latitude' => $request->latitude,
-            'foto'=>$filename,
-            'tgl_start' => $request->tgl_start,
-            'tgl_end' => $request->tgl_end,
-        ]);
+        // store pohot
+        $foto = $request->file('foto');
+        $foto->storeAs('public/images', $foto->hashName());
 
-        $file->move(public_path($location), $filename);
+        // validasi tanggal start
+        $postDate = Carbon::now();
+        $userDate = Carbon::parse($request->tgl_start);
+        $minutesDifference = $userDate->diffInMinutes($postDate);
+        if ($minutesDifference <= 60) {
+            $tgl_start = $request->tgl_start;
+        } else {
+            $tgl_start = Carbon::now();
+        }
+
+        // coordinate expoloder
+        $data = $request->coordinates;
+        $coordinates = explode(",", $data);
+
+        $longitude = $coordinates[0];
+        $latitude = $coordinates[1];
+        Pelaporan::create([
+            'unique_id' => Auth::user()->id,
+            'panjang_perbaikan' => $request->panjang_perbaikan,
+            'lebar_perbaikan' => $request->lebar_perbaikan,
+            'nama_lokasi' => $request->nama_lokasi,
+            'nama_company' => Auth::user()->nama_company,
+            'longitude' => $longitude,
+            'latitude' => $latitude,
+            'foto'=>$foto->hashName(),
+            'tgl_start' => $tgl_start,
+            'tgl_end' => null,
+            'status' => "1",
+        ]);
         // Session::flash('success', 'Data User Berhasil Ditambahkan');
-        return view('pelaporan.create');
+        return redirect()->route('client.laporan.index');
         
     }
 
@@ -65,8 +91,12 @@ class PelaporanController extends Controller
      */
     public function show(string $id)
     {
-        $pelaporan = Pelaporan::findOrFail($id);
-        return view('pelaporan.read', compact('pelaporan'));
+        try {
+            $pelaporan = Pelaporan::findOrFail($id);
+            return view('pelaporan.read', compact('pelaporan'));
+        } catch (ModelNotFoundException $e){
+            return redirect()->route('pelaporan.index');
+        }
     }
 
     /**
@@ -74,8 +104,12 @@ class PelaporanController extends Controller
      */
     public function edit(string $id)
     {
-        $pelaporan=Pelaporan::where('id',$id)->first();
-        return view('pelaporan.update',compact('pelaporan'));
+        try {
+            $pelaporan = Pelaporan::findOrFail($id);
+            return view('pelaporan.update', compact('pelaporan'));
+        } catch (ModelNotFoundException $e){
+            return redirect()->route('pelaporan.index');
+        }
     }
 
     /**
@@ -105,8 +139,6 @@ class PelaporanController extends Controller
         $data = Pelaporan::where('id', $id)->first();
         $data->delete();
 
-        Session::flash('success', 'Data User Berhasil DiHapus');
-        $pelaporans=Pelaporan::all();
         return redirect()->back();
     }
 }

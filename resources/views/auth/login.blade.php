@@ -37,17 +37,18 @@
                                 </span>
                                 @enderror
                             </div>
-                            <div class="col mx-0 align-items-center justify-content-start d-flex">
-                                <i class="fas fa-eye" role="button" onclick="reveal()"></i>
-                            </div>
                         </div>
-
+                        
                         <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
+                                <div class="col mx-0 py-1 align-items-center justify-content-start d-flex">
+                                    <i class="fas fa-eye" role="button" onclick="reveal()"></i>
+                                    <span class="form-check-label mx-2" style="cursor: pointer" onclick="reveal()">Show Password</span>
+                                </div>
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <label class="form-check-label" for="remember">
+                                    <label class="form-check-label" for="remember" style="cursor: pointer">
                                         {{ __('Remember Me') }}
                                     </label>
                                 </div>
