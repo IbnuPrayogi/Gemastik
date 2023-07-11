@@ -14,7 +14,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(10);
+        $users = User::all();
         return view('user.index', compact('users'));
     }
 
@@ -31,30 +31,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'image_users' => 'required|mimes:jpeg,png,jpg,gif|max:5120 ',
-        ]);
-        
-        $file = $validatedData[('image_users')];
-        $filename =  $file->getClientOriginalName();
-      
-        $location = '../public/assets/images/profil/';
-        User::create([
+        $user = User::create([
             'id_roles' => $request->id_roles,
             'nama_company' => $request->nama_company,
             'nama_pemilik' => $request->nama_pemilik,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'image_users' => $filename,
-            'rekening'=>$request->rekening,
-            'alamat' => $request->alamat,
-            'status' => $request->status,
+            'status' => "Ready",
         ]);
-
-        $file->move(public_path($location), $filename);
-        // Session::flash('success', 'Data User Berhasil Ditambahkan');
-        return view('user.create');
-        //
+        return redirect('/admin/user/'.$user->id);
     }
 
     /**
@@ -62,7 +47,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $users = User::find($id);
+        $tittle = 'Detail User ' . $users->nama_company;
+        return view('user.read', compact('users', 'tittle'));
     }
 
     /**
@@ -70,9 +57,9 @@ class UserController extends Controller
      */
     public function edit(string $id)
     {
-        $users=User::where('id',$id)->first();
-        return view('user.update',compact('users'));
-        
+        $users = User::find($id);
+        $tittle = 'Edit User ' . $users->nama_company;
+        return view('user.update', compact('users', 'tittle'));
     }
 
     /**
@@ -100,6 +87,20 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $users = User::find($id);
+        $users->delete();
+        return redirect()->back();
+    }
+
+    // reset password
+    public function reset(string $id)
+    {
+        $reset = User::find($id);
+        $reset->password = Hash::make('password');
+        $reset->save();
+        $users = User::find($id);
+
+        $tittle = 'Reset Password ' . $users->nama_company;
+        return view('user.update', compact('users', 'tittle'));
     }
 }

@@ -2,6 +2,22 @@
 
 @section('title', 'Tambah User')
 
+@section('css')
+    <style>
+        .dark-mode input:-webkit-autofill,
+        .dark-mode input:-webkit-autofill:focus,
+        .dark-mode input:-webkit-autofill:hover,
+        .dark-mode select:-webkit-autofill,
+        .dark-mode select:-webkit-autofill:focus,
+        .dark-mode select:-webkit-autofill:hover,
+        .dark-mode textarea:-webkit-autofill,
+        .dark-mode textarea:-webkit-autofill:focus,
+        .dark-mode textarea:-webkit-autofill:hover {
+            -webkit-text-fill-color: #000 !important;
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -14,19 +30,7 @@
                         <div class="card-header">
                             <h3 class="card-title">Tambah User baru</h3>
                         </div>
-                        <!-- /.card-header 
-                        <th style="width: 10px">No</th>
-                                        <th>Nama Company</th>
-                                        <th>Nama Pemilik</th>
-                                        <th>ID Pinpoint</th>
-                                        <th>Email</th>
-                                        <th>Rekening</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Created at</th>
-                                        <th>More</th>-->
-                        <!-- form start -->
-                        <form method="POST" action="{{ route('user.store') }}" enctype='multipart/form-data'>
+                        <form method="POST" action="{{ route('admin.user.store') }}" enctype='multipart/form-data' autocomplete="off">
                             @csrf
                             @method('POST')
                             <div class="card-body">
@@ -34,10 +38,8 @@
                                     <label for="id_roles">Roles</label>
                                     <select name="id_roles" required class="custom-select form-control-border"
                                         id="id_roles">
-                                        <option selected>=== PILIH ROLE ===</option>
-                                        <option value="11">SuperAdmin</option>
-                                        <option value="99">OP</option>
-                                        <option value="00">Penristek</option>
+                                        <option selected value="99" selected>Kontraktor</option>
+                                        <option value="11">Admin</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
@@ -60,26 +62,7 @@
                                     <input name="password" type="password" class="form-control" id="password"
                                         placeholder="Masukan Password..." required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="image_users">Foto Profil</label>
-                                    <input name="image_users" type="file" class="form-control" id="image_users"
-                                        placeholder="Masukan image_users..." accept="image/*">
-                                </div>
-                                <div class="form-group">
-                                    <label for="rekening">Rekening</label>
-                                    <input name="rekening" type="rekening" class="form-control" id="rekening"
-                                        placeholder="Masukan Rekening...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="alamat">Alamat</label>
-                                    <input name="alamat" type="alamat" class="form-control" id="alamat"
-                                        placeholder="Masukan Alamat...">
-                                </div>
-                                <div class="form-group">
-                                    <label for="status">Status</label>
-                                    <input name="status" type="status" class="form-control" id="status"
-                                        placeholder="Masukan Status...">
-                                </div>
+                                <input type="hidden" name="status" value="Ready" required>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">

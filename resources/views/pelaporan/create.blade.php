@@ -1,6 +1,22 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah User')
+@section('title', 'Buat Laporan')
+
+@section('css')
+    <style>
+        .dark-mode input:-webkit-autofill,
+        .dark-mode input:-webkit-autofill:focus,
+        .dark-mode input:-webkit-autofill:hover,
+        .dark-mode select:-webkit-autofill,
+        .dark-mode select:-webkit-autofill:focus,
+        .dark-mode select:-webkit-autofill:hover,
+        .dark-mode textarea:-webkit-autofill,
+        .dark-mode textarea:-webkit-autofill:focus,
+        .dark-mode textarea:-webkit-autofill:hover {
+            -webkit-text-fill-color: #000 !important;
+        }
+    </style>
+@endsection
 
 @section('content')
     <!-- Main content -->
@@ -14,73 +30,53 @@
                         <div class="card-header">
                             <h3 class="card-title">Tambah User baru</h3>
                         </div>
-                        <!-- /.card-header 
-                        <th style="width: 10px">No</th>
-                                        <th>Nama Company</th>
-                                        <th>Nama Pemilik</th>
-                                        <th>ID Pinpoint</th>
-                                        <th>Email</th>
-                                        <th>Rekening</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Created at</th>
-                                        <th>More</th>-->
-                        <!-- form start -->
-                        <form method="POST" action="{{ route('pelaporan.store') }}" enctype='multipart/form-data'>
+                        <form method="POST" action="{{ route('client.laporan.store') }}" enctype='multipart/form-data'>
                             @csrf
                             @method('POST')
                             <div class="card-body">
-                                {{-- <div class="form-group">
-                                    <label for="id_role">Roles</label>
-                                    <select name="id_role" required class="custom-select form-control-border"
-                                        id="id_role">
-                                        <option selected>=== PILIH ROLE ===</option>
-                                        <option value="888">SuperAdmin</option>
-                                        <option value="999">OP</option>
-                                        <option value="1000">Penristek</option>
-                                    </select>
-                                </div> --}}
-
-                                <div class="form-group">
-                                    <label for="email">Nama Proyek</label>
-                                    <input name="nama_proyek" type="text" class="form-control" id="nama_proyek"
-                                        placeholder="Masukan Nama Proyek" required>
-                                </div>
                                 <div class="form-group">
                                     <label for="nama_lokasi">Nama Lokasi</label>
-                                    <input name="nama_lokasi" class="form-control" id="nama_lokasi" placeholder="Masukkan Nama Lokasi..."
+                                    <input name="nama_lokasi" class="form-control" id="nama_lokasi" placeholder="Nama Lokasi" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nama_company">Nama Perusahaan</label>
+                                    <input name="nama_company" type="text" class="form-control text-white" id="nama_company"
+                                    value="{{ Auth::user()->nama_company }}" disabled>
+                                    <input name="nama_company" type="hidden" class="form-control" id="nama_company"
+                                    value="{{ Auth::user()->nama_company }}" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="panjang_perbaikan">Panjang Perbaikan</label>
+                                    <div class="input-group">
+                                        <input name="panjang_perbaikan" type="text" class="form-control" id="panjang_perbaikan" value="1" required>
+                                        <span class="input-group-text">Meter</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="lebar_perbaikan">Lebar Perbaikan</label>
+                                    <div class="input-group">
+                                        <input name="lebar_perbaikan" type="text" class="form-control" id="lebar_perbaikan" value="1" required>
+                                        <span class="input-group-text">Meter</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="coordinates">Longitude dan Latitude</label>
+                                    <input name="coordinates" class="form-control" id="coordinates" placeholder="contoh : -4.8893,113.9213" value=""
                                         required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="password">Nama Perusahaan</label>
-                                    <input name="nama_company" type="nama_company" class="form-control" id="nama_company"
-                                        placeholder="Masukan Nama Perusahaan">
+                                <div class="form-group"> 
+                                    <label for="foto">Upload Foto Lokasi</label>
+                                    <div class="input-group mb-3">
+                                        <input type="file" class="form-control" id="foto" name="foto" required>
+                                    </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nama">Longitude</label>
-                                    <input name="longitude" class="form-control" id="longitude" placeholder="Masukkan longitude..."
+                                    <label for="tgl_end">Tanggal Mulai</label>
+                                    <input type="datetime" name="tgl_start" class="form-control" id="tgl_start" value="{{ date('Y-m-d H:i:s') }}"
                                         required>
                                 </div>
-                                <div class="form-group">
-                                    <label for="latitude">Latitude</label>
-                                    <input name="latitude" class="form-control" id="latitude" placeholder="Masukkan latitude..."
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="foto">Foto</label>
-                                    <input type="file" name="foto" class="form-control" id="foto" placeholder="Masukkan Foto..."
-                                       accept="image/*" required multiple>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tgl_start">Tanggal Dimulai</label>
-                                    <input type="datetime-local" name="tgl_start" class="form-control" id="tgl_start" placeholder="Masukkan Tanggal Dimulai..."
-                                        required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="tgl_end">Tanggal Selesai</label>
-                                    <input type="datetime-local" name="tgl_end" class="form-control" id="tgl_end" placeholder="Masukkan Tanggal Selesai..."
-                                        required>
-                                </div>
+                                <input type="hidden" name="tgl_end" class="form-control" id="tgl_end" value=""
+                                    required>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">
