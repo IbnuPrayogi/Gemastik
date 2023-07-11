@@ -19,11 +19,13 @@ class UserSeeder extends Seeder
             'id_roles' => 99,
             'nama_company' => 'Test Client',
             'email' => 'test@example.com',
+            'status' => 'Ready',
         ]);
         User::factory()->create([
             'id_roles' => 11,
             'nama_company' => 'Test Admin',
             'email' => 'admin@admin.com',
+            'status' => 'Tidak Ready',
         ]);
     }
 }

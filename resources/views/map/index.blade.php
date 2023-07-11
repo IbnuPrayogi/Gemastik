@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Map Berdasarkan Status')
+@section('title', 'Map Berdasarkan Panjang')
 @section('css')
     
     <style>
@@ -72,6 +72,24 @@
     <link rel="stylesheet" href="{{ asset('ol/ol.css') }}">
 @endsection
 @section('content')
+    <div class="d-flex container">
+        <div class="bg-gradient-dark m-1 p-1 rounded-sm">
+            <img style="width: 30px" src="{{ asset('assets/icons/grey-pin.png') }}" alt="grey-pin">
+            Belum Diperbaiki
+        </div>
+        <div class="bg-gradient-dark m-1 p-1 rounded-sm">
+            <img style="width: 30px" src="{{ asset('assets/icons/orange-pin.png') }}" alt="orange-pin">
+            Proses Perbaikan
+        </div>
+        <div class="bg-gradient-dark m-1 p-1 rounded-sm">
+            <img style="width: 30px" src="{{ asset('assets/icons/red-pin.png') }}" alt="red-pin">
+            Sudah Diperbaiki
+        </div>
+        <div class="bg-gradient-dark m-1 p-1 rounded-sm">
+            <img style="width: 30px" src="{{ asset('assets/icons/gold-pin.png') }}" alt="gold-pin">
+            Laporan Selesai
+        </div>
+    </div>
     <div id="container">
         <div id="map"></div>
         <div id="popup" class="ol-popup">

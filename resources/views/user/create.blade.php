@@ -2,6 +2,22 @@
 
 @section('title', 'Tambah User')
 
+@section('css')
+    <style>
+        .dark-mode input:-webkit-autofill,
+        .dark-mode input:-webkit-autofill:focus,
+        .dark-mode input:-webkit-autofill:hover,
+        .dark-mode select:-webkit-autofill,
+        .dark-mode select:-webkit-autofill:focus,
+        .dark-mode select:-webkit-autofill:hover,
+        .dark-mode textarea:-webkit-autofill,
+        .dark-mode textarea:-webkit-autofill:focus,
+        .dark-mode textarea:-webkit-autofill:hover {
+            -webkit-text-fill-color: #000 !important;
+        }
+    </style>
+@endsection
+
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -14,32 +30,25 @@
                         <div class="card-header">
                             <h3 class="card-title">Tambah User baru</h3>
                         </div>
-                        <!-- /.card-header 
-                        <th style="width: 10px">No</th>
-                                        <th>Nama Company</th>
-                                        <th>Nama Pemilik</th>
-                                        <th>ID Pinpoint</th>
-                                        <th>Email</th>
-                                        <th>Rekening</th>
-                                        <th>Alamat</th>
-                                        <th>Status</th>
-                                        <th>Created at</th>
-                                        <th>More</th>-->
-                        <!-- form start -->
-                        <form method="POST" action="{{ route('user.store') }}" enctype='multipart/form-data'>
+                        <form method="POST" action="{{ route('admin.user.store') }}" enctype='multipart/form-data' autocomplete="off">
                             @csrf
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="id_role">Roles</label>
-                                    <select name="id_role" required class="custom-select form-control-border"
-                                        id="id_role">
+                                    <label for="id_roles">Roles</label>
+                                    <select name="id_roles" required class="custom-select form-control-border"
+                                        id="id_roles">
+                                        <option selected value="99" selected>Kontraktor</option>
                                         <option value="11">Admin</option>
-                                        <option value="99" selected>Kontraktor</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="nama">Nama</label>
-                                    <input name="nama" class="form-control" id="nama" placeholder="Masukkan Nama..."
+                                    <label for="nama_company">Nama Perusahaan</label>
+                                    <input name="nama_company" class="form-control" id="nama_company" placeholder="Masukkan Nama Perusahaan..."
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nama_pemilik">Nama Pemilik</label>
+                                    <input name="nama_pemilik" class="form-control" id="nama_pemilik" placeholder="Masukkan Nama Pemilik..."
                                         required>
                                 </div>
                                 <div class="form-group">
@@ -50,8 +59,9 @@
                                 <div class="form-group">
                                     <label for="password">Password</label>
                                     <input name="password" type="password" class="form-control" id="password"
-                                        placeholder="Masukan Password...">
+                                        placeholder="Masukan Password..." required>
                                 </div>
+                                <input type="hidden" name="status" value="Ready" required>
                             </div>
                             <!-- /.card-body -->
                             <div class="card-footer">

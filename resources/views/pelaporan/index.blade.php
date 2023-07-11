@@ -65,7 +65,7 @@
                                     @endphp
                                     @foreach ($pelaporans as $pelaporan => $value)
                                         <tr>
-                                            <td>{{ $no }}</td>
+                                            <td>{{ $no++ }}</td>
                                             <td>{{ $value->panjang_perbaikan }}</td>
                                             <td>{{ $value->lebar_perbaikan }}</td>
                                             <td>{{ $value->nama_lokasi }}</td>
@@ -140,9 +140,6 @@
                                                 @endif
                                             </td>
                                         </tr>
-                                        @php
-                                            $no++
-                                        @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -157,35 +154,15 @@
 @endsection
 
 @section('script')
-<script>
-    $(function () {
-        $("#example1").DataTable({
-        "lengthChange": true, "autoWidth": true,
-        "buttons": ["csv", "excel", "pdf", "print"],
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+            "lengthChange": true, "autoWidth": true,
+            "buttons": ["csv", "excel", "pdf", "print"],
+                
             
-        
-        }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-    });
-
-    // const searchInput = document.getElementById('search-input');
-    // const tableSearch = document.getElementById('example1');
-
-    // searchInput.addEventListener('input', () => {
-    //     const searchValue = searchInput.value.toLowerCase();
-    //     const rowsSearch = tableSearch.querySelectorAll('tbody tr');
-
-    //     rowsSearch.forEach((row) => {
-    //     const dateCell = row.querySelector('td:nth-child(9)');
-    //     const dateSearch = new Date(dateCell.textContent);
-
-    //     if (dateSearch && dateSearch.toLocaleString('default', { month: 'long' }).toLowerCase().indexOf(searchValue) === -1) {
-    //         row.classList.add('d-none');
-    //     } else {
-    //         row.classList.remove('d-none');
-    //     }
-    //     });
-    // });
-
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
     </script>
     <!-- DataTables  & Plugins -->
     <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>

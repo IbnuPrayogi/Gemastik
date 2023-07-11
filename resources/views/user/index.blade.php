@@ -2,6 +2,15 @@
 
 @section('title', 'Kelola User')
 
+@section('css')
+    <style>
+        #example1_filter, #example1_paginate {
+            display: flex;
+            justify-content: end;
+        }
+    </style>
+@endsection
+
 @section('content')
     <!--./Tabel User-->
     <section class="content">
@@ -14,7 +23,7 @@
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body" style="overflow-x: overlay">
-                            <table class="table table-bordered text-center align-items-center">
+                            <table id="example1" class="table table-bordered text-center align-items-center">
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
@@ -30,14 +39,17 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @php
+                                        $no = 1;
+                                    @endphp
                                     @foreach ($users as $user => $value)
                                         <tr>
-                                            <td class="text-center">{{ $users->firstItem() + $user }}</td>
+                                            <td class="text-center">{{ $no++ }}</td>
                                             <td>{{ $value->nama_company }}</td>
                                             <td>{{ $value->nama_pemilik }}</td>
-                                            @if ($value->id_role == 99)
+                                            @if ($value->id_roles == 99)
                                                 <td>Kontraktor</td>
-                                            @elseif ($value->id_role == 11)
+                                            @elseif ($value->id_roles == 11)
                                                 <td>Admin</td>
                                             @else
                                                 <td>Tidak Terdaftar</td>
@@ -92,22 +104,38 @@
                                     @endforeach
                                 </tbody>
                             </table>
-                            {{ $users->links() }}
                         </div>
                         <!-- /.card-body -->
-                        <div class="card-footer clearfix">
-                            <ul class="pagination pagination-sm m-0 float-right">
-                                <li class="page-item"><a class="page-link" href="#">&laquo;</a></li>
-                                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                <li class="page-item"><a class="page-link" href="#">&raquo;</a></li>
-                            </ul>
-                        </div>
                     </div>
                     <!-- /.card -->
                 </div>
             </div>
         </div>
     </section>
+@endsection
+
+@section('script')
+    <script>
+        $(function () {
+            $("#example1").DataTable({
+            "lengthChange": true, "autoWidth": true,
+            "buttons": ["csv", "excel", "pdf", "print"],
+                
+            
+            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+        });
+    </script>
+    <!-- DataTables  & Plugins -->
+    <script src="{{asset('plugins/datatables/jquery.dataTables.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-responsive/js/dataTables.responsive.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-responsive/js/responsive.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/dataTables.buttons.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.bootstrap4.min.js')}}"></script>
+    <script src="{{asset('plugins/jszip/jszip.min.js')}}"></script>
+    <script src="{{asset('plugins/pdfmake/pdfmake.min.js')}}"></script>
+    <script src="{{asset('plugins/pdfmake/vfs_fonts.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.html5.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.print.min.js')}}"></script>
+    <script src="{{asset('plugins/datatables-buttons/js/buttons.colVis.min.js')}}"></script>
 @endsection
