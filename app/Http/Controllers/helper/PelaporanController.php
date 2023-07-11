@@ -139,7 +139,6 @@ class PelaporanController extends Controller
         $data = Pelaporan::where('id', $id)->first();
         $data->delete();
 
-        $pelaporans=Pelaporan::all();
         return redirect()->back();
     }
 }

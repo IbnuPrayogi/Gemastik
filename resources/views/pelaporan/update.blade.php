@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tambah User')
+@section('title', 'Tambah Laporan')
 
 @section('content')
     <!-- Main content -->

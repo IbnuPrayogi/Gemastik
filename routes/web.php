@@ -29,11 +29,13 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/user/{id}/reset', 'App\Http\Controllers\helper\UserController@reset')->name('user.reset');
         Route::resource('/laporan',PelaporanController::class)->except(['create','store']);
         Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
+        Route::get('/maplength', 'App\Http\Controllers\Api\MapController@next')->name('map.next');
     });
     Route::middleware(['kontraktor'])->name('client.')->prefix('client')->group(function () {
         Route::resource('/user', UserController::class);
         Route::resource('/laporan',PelaporanController::class);
         Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
+        Route::get('/maplength', 'App\Http\Controllers\Api\MapController@next')->name('map.next');
     });
     Route::post('/save-coordinates', 'App\Http\Controllers\Api\MapController@saveCoordinates');
 });

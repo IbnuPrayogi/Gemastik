@@ -31,13 +31,15 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        User::create([
+        $user = User::create([
             'id_roles' => $request->id_roles,
             'nama_company' => $request->nama_company,
             'nama_pemilik' => $request->nama_pemilik,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'status' => "Ready",
         ]);
+        return redirect('/admin/user/'.$user->id);
     }
 
     /**
@@ -45,7 +47,9 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $users = User::find($id);
+        $tittle = 'Detail User ' . $users->nama_company;
+        return view('user.read', compact('users', 'tittle'));
     }
 
     /**
@@ -71,7 +75,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $users = User::find($id);
+        $users->delete();
+        return redirect()->back();
     }
 
     // reset password
