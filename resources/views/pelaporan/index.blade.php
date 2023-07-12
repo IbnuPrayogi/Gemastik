@@ -46,8 +46,8 @@
                                 <thead>
                                     <tr>
                                         <th style="width: 10px">No</th>
-                                        <th>Panjang Perbaikan (Kilometer)</th>
-                                        <th>Lebar Perbaikan (Kilometer)</th>
+                                        <th>Panjang Perbaikan (Meter)</th>
+                                        <th>Lebar Perbaikan (Meter)</th>
                                         <th>Nama Lokasi</th>
                                         <th>Nama Perusahaan</th>
                                         <th>Longitude</th>

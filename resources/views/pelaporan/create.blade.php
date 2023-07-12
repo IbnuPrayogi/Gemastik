@@ -33,14 +33,14 @@
                                     <label for="panjang_perbaikan">Panjang Perbaikan</label>
                                     <div class="input-group">
                                         <input name="panjang_perbaikan" type="text" class="form-control" id="panjang_perbaikan" value="1" required>
-                                        <span class="input-group-text">Kilometer</span>
+                                        <span class="input-group-text">Meter</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="lebar_perbaikan">Lebar Perbaikan</label>
                                     <div class="input-group">
                                         <input name="lebar_perbaikan" type="text" class="form-control" id="lebar_perbaikan" value="1" required>
-                                        <span class="input-group-text">Kilometer</span>
+                                        <span class="input-group-text">Meter</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
