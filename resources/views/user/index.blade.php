@@ -54,11 +54,11 @@
                                             @else
                                                 <td>Tidak Terdaftar</td>
                                             @endif
-                                            <td>{{ $user->email }}</td>
-                                            <td>{{ $user->rekening }}</td>
-                                            <td>{{ Str::limit($user->alamat, 10) }}</td>
-                                            <td>{{ $user->status }}</td>
-                                            <td>{{ $user->created_at }}</td>
+                                            <td>{{ $value->email }}</td>
+                                            <td>{{ $value->rekening }}</td>
+                                            <td>{{ Str::limit($value->alamat, 10) }}</td>
+                                            <td>{{ $value->status }}</td>
+                                            <td>{{ $value->created_at }}</td>
                                             <td class="justify-content-center d-flex">
                                                 <a href="{{ route('admin.user.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
                                                     <i class="fa-solid fa-eye"></i>
@@ -67,11 +67,11 @@
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
-                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm{{ $user->id }}" >
+                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm{{ $value->id }}" >
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                                 <!-- Modal -->
-                                                <div class="modal fade bd-example-modal-sm{{ $user->id }}"  tabindex="-1"
+                                                <div class="modal fade bd-example-modal-sm{{ $value->id }}"  tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog bd-danger">
                                                         <div class="modal-content">
@@ -82,7 +82,7 @@
                                                             </div>
                                                             <div class="modal-body">
                                                                 Apakah Anda yakin ingin menghapus user ini? <br>
-                                                                "{{ $user->nama_company }}"
+                                                                "{{ $value->nama_company }}"
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <form action="{{ route('admin.user.destroy', $value->id) }}"

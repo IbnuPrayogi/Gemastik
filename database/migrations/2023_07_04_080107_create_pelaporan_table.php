@@ -16,8 +16,8 @@ return new class extends Migration
             $table->unsignedBigInteger('unique_id')->nullable();
             $table->foreign('unique_id')->references('id')->on('users')
             ->constrained('pelaporan')->onUpdate('cascade');
-            $table->string('panjang_perbaikan')->nullable();
-            $table->string('lebar_perbaikan')->nullable();
+            $table->float('panjang_perbaikan')->nullable();
+            $table->float('lebar_perbaikan')->nullable();
             $table->string('nama_lokasi')->nullable();
             $table->string('nama_company')->nullable();
             $table->string('longitude')->nullable();

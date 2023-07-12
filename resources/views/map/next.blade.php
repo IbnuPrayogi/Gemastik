@@ -75,19 +75,19 @@
     <div class="d-flex container">
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/grey-pin.png') }}" alt="grey-pin">
-            1 - 30 meter
+            1 - 20 KM
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/gold-pin.png') }}" alt="orange-pin">
-            31 - 80 meter
+            21 - 30 KM
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/orange-pin.png') }}" alt="red-pin">
-            81 - 100 meter
+            31 - 50 KM
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/red-pin.png') }}" alt="gold-pin">
-            > 100 meter
+            > 50 KM
         </div>
     </div>
     <div id="container">
@@ -249,11 +249,11 @@
                 status: point.properties.status,
                 panjang_perbaikan: point.properties.panjang_perbaikan,
             });
-            if (point.properties.panjang_perbaikan > 100){
+            if (point.properties.panjang_perbaikan > 50){
                 vectorLayerRed.getSource().addFeature(marker);
-            }else if(point.properties.panjang_perbaikan > 80){
-                vectorLayerOrange.getSource().addFeature(marker);
             }else if(point.properties.panjang_perbaikan > 30){
+                vectorLayerOrange.getSource().addFeature(marker);
+            }else if(point.properties.panjang_perbaikan > 20){
                 vectorLayerGold.getSource().addFeature(marker);
             }else if(point.properties.panjang_perbaikan >= 1){
                 vectorLayerGrey.getSource().addFeature(marker);

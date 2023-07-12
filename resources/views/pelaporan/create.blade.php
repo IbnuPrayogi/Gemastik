@@ -2,22 +2,6 @@
 
 @section('title', 'Buat Laporan')
 
-@section('css')
-    <style>
-        .dark-mode input:-webkit-autofill,
-        .dark-mode input:-webkit-autofill:focus,
-        .dark-mode input:-webkit-autofill:hover,
-        .dark-mode select:-webkit-autofill,
-        .dark-mode select:-webkit-autofill:focus,
-        .dark-mode select:-webkit-autofill:hover,
-        .dark-mode textarea:-webkit-autofill,
-        .dark-mode textarea:-webkit-autofill:focus,
-        .dark-mode textarea:-webkit-autofill:hover {
-            -webkit-text-fill-color: #000 !important;
-        }
-    </style>
-@endsection
-
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -49,14 +33,14 @@
                                     <label for="panjang_perbaikan">Panjang Perbaikan</label>
                                     <div class="input-group">
                                         <input name="panjang_perbaikan" type="text" class="form-control" id="panjang_perbaikan" value="1" required>
-                                        <span class="input-group-text">Meter</span>
+                                        <span class="input-group-text">Kilometer</span>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="lebar_perbaikan">Lebar Perbaikan</label>
                                     <div class="input-group">
                                         <input name="lebar_perbaikan" type="text" class="form-control" id="lebar_perbaikan" value="1" required>
-                                        <span class="input-group-text">Meter</span>
+                                        <span class="input-group-text">Kilometer</span>
                                     </div>
                                 </div>
                                 <div class="form-group">

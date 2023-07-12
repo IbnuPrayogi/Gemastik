@@ -181,7 +181,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link {{ Request::routeIs('admin.alumni.index') ? 'active' : '' }}">
+                            @if (Auth::user()->id_roles == 11)
+                                <a href="{{ route('admin.map.next') }}" class="nav-link {{ Request::routeIs('admin.map.next') ? 'active' : '' }}">
+                            @else
+                                <a href="{{ route('client.map.next') }}" class="nav-link {{ Request::routeIs('client.map.next') ? 'active' : '' }}">
+                            @endif
                                 <i class="far fa-circle nav-icon"></i>
                                 <p>Berdasarkan Panjang</p>
                             </a>
