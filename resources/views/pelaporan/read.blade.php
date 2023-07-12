@@ -59,7 +59,6 @@
                                     </span>
                                 </div>
                             </div>
-                            
                             <div class="form-group">
                                 <label for="tgl_end">Tanggal Mulai</label>
                                 <input type="datetime" name="tgl_start" class="form-control" id="tgl_start" placeholder="{{ $pelaporan->tgl_start}}" value="{{ $pelaporan->tgl_start}}"
@@ -70,9 +69,38 @@
                                 <input type="datetime" name="tgl_end" class="form-control" id="tgl_end" value="@if ($pelaporan->tgl_end==null) Belum Selesai @else {{ $pelaporan->tgl_end}} @endif"
                                     disabled>
                             </div>
+                            <div class="form-group">
+                                <div class="d-flex flex-column">
+                                    <label for="foto">Foto</label>
+                                    <a class="text-decoration-none" role="button" data-toggle="modal" data-target="#image-{{ $pelaporan->id }}">
+                                        <img name="foto" style="max-width: 150px; max-height: 150px; object-fit: contain;" src="{{asset('storage/images/'.$pelaporan->foto)}}" alt="">
+                                    </a>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <!-- /.card -->
+                    {{-- Modal Image --}}
+                    <div id="image-{{ $pelaporan->id }}" class="modal fade" tabindex="-1"
+                        role="dialog" aria-hidden="true">
+                        <div class="modal-dialog bd-danger">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="staticBackdropLabel">
+                                        <strong>Lihat Foto Laporan</strong>
+                                    </h5>
+                                </div>
+                                <div class="modal-body justify-content-center d-flex">
+                                    <img style="max-width: 500px; max-height: 500px; object-fit: contain;" class="px-3" src="{{asset('storage/images/'.$pelaporan->foto)}}" alt="">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">
+                                        Tutup
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

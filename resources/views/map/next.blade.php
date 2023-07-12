@@ -75,19 +75,19 @@
     <div class="d-flex container">
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/grey-pin.png') }}" alt="grey-pin">
-            1 - 30 meter
+            1 - 100 meter
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/gold-pin.png') }}" alt="orange-pin">
-            31 - 80 meter
+            101 - 500 meter
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/orange-pin.png') }}" alt="red-pin">
-            81 - 100 meter
+            501 - 1000 meter
         </div>
         <div class="bg-gradient-dark m-1 p-1 rounded-sm justify-content-center d-flex">
             <img style="width: 30px; height: 30px; object-fit: contain;" src="{{ asset('assets/icons/red-pin.png') }}" alt="gold-pin">
-            > 100 meter
+            > 1000 meter
         </div>
     </div>
     <div id="container">
@@ -249,11 +249,11 @@
                 status: point.properties.status,
                 panjang_perbaikan: point.properties.panjang_perbaikan,
             });
-            if (point.properties.panjang_perbaikan > 100){
-                vectorLayerRed.getSource().addFeature(marker);
-            }else if(point.properties.panjang_perbaikan > 80){
+            if (point.properties.panjang_perbaikan > 1000){
+                vectorLayer.getSource().addFeature(marker);
+            }else if(point.properties.panjang_perbaikan > 500){
                 vectorLayerOrange.getSource().addFeature(marker);
-            }else if(point.properties.panjang_perbaikan > 30){
+            }else if(point.properties.panjang_perbaikan > 100){
                 vectorLayerGold.getSource().addFeature(marker);
             }else if(point.properties.panjang_perbaikan >= 1){
                 vectorLayerGrey.getSource().addFeature(marker);

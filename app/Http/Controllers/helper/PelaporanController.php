@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 
 class PelaporanController extends Controller
 {
@@ -68,7 +69,7 @@ class PelaporanController extends Controller
 
         $longitude = $coordinates[0];
         $latitude = $coordinates[1];
-        Pelaporan::create([
+        $laporan = Pelaporan::create([
             'unique_id' => Auth::user()->id,
             'panjang_perbaikan' => $request->panjang_perbaikan,
             'lebar_perbaikan' => $request->lebar_perbaikan,
@@ -117,16 +118,26 @@ class PelaporanController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $pelaporan = Pelaporan::where('id', $id)->first();
-        $pelaporan->nama_proyek = $request->input('nama_proyek');
-        $pelaporan->nama_lokasi = $request->input('nama_lokasi');
-        $pelaporan->nama_company = $request->input('nama_company');
-        $pelaporan->longitude = $request->input('longitude');
-        $pelaporan->latitude = $request->input('latitude');
-        $pelaporan->tgl_end = $request->input('tgl_end');
+        $pelaporan = Pelaporan::findOrFail($id);
+        if($pelaporan->status == 1){
+            $pelaporan->update([
+                'status' => 2,
+                'nama_lokasi' => $request->nama_lokasi,
+                'panjang_perbaikan' => $request->panjang_perbaikan,
+                'lebar_perbaikan' => $request->lebar_perbaikan,
+            ]);
+        }else if($pelaporan->status == 2){
+            $pelaporan->update([
+                'status' => 3,
+            ]);
+        }else if($pelaporan->status == 3){
+            $pelaporan->update([
+                'status' => 4,
+            ]);
+        }
         $pelaporan->save();
 
-        return view('pelaporan.index');
+        return redirect('/client/laporan');
 
         //
     }
@@ -136,9 +147,13 @@ class PelaporanController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = User::where('id', $id)->first();
+        $data = User::findOrFail($id);
+        // $foto = $data->foto;
+        // if($data->foto != 'default.png'){
+        // }
         $data->delete();
+        Storage::disk('public/images')->delete($data->foto);
 
-        return redirect()->back();
+        return redirect('client/laporan');
     }
 }

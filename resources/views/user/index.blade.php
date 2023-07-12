@@ -67,11 +67,11 @@
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
-                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-bs-toggle="modal" data-bs-target=".bd-example-modal-sm{{ $value->id }}" >
+                                                <a role="button" class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}" >
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                                 <!-- Modal -->
-                                                <div class="modal fade bd-example-modal-sm{{ $value->id }}"  tabindex="-1"
+                                                <div id="hapus-{{ $value->id }}" class="modal fade"  tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog bd-danger">
                                                         <div class="modal-content">

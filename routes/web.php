@@ -27,7 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['admin'])->name('admin.')->prefix('admin')->group(function () {
         Route::resource('/user', UserController::class);
         Route::post('/user/{id}/reset', 'App\Http\Controllers\helper\UserController@reset')->name('user.reset');
-        Route::resource('/laporan',PelaporanController::class)->except(['create','store']);
+        Route::resource('/laporan',PelaporanController::class)->except(['create','store', 'destroy']);
         Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
         Route::get('/maplength', 'App\Http\Controllers\Api\MapController@next')->name('map.next');
     });
@@ -37,5 +37,4 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/map', 'App\Http\Controllers\Api\MapController@index')->name('map.index');
         Route::get('/maplength', 'App\Http\Controllers\Api\MapController@next')->name('map.next');
     });
-    Route::post('/save-coordinates', 'App\Http\Controllers\Api\MapController@saveCoordinates');
 });
