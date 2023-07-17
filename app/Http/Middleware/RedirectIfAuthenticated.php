@@ -21,10 +21,19 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                return redirect(RouteServiceProvider::HOME);
+                return redirect($this->getRedirectPath($request));
             }
         }
-
         return $next($request);
+    }
+    protected function getRedirectPath(Request $request): string
+    {
+        if ($request->user()->id_role==11) {
+            return RouteServiceProvider::ADMIN;
+        } elseif ($request->user()->id_roles==99) {
+            return RouteServiceProvider::CLIENT;
+        } else {
+            return RouteServiceProvider::HOME;
+        }
     }
 }

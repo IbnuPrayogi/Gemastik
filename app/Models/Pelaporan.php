@@ -11,13 +11,20 @@ class Pelaporan extends Model
     protected $table = 'pelaporan';
     protected $fillable = [
         'unique_id',
-        'nama_proyek',
+        'panjang_perbaikan',
+        'lebar_perbaikan',
         'nama_lokasi',
         'nama_company',
         'longitude',
         'latitude',
+        'foto',
         'tgl_start',
-        'tgl_end',
-        'tgl_estimasi_perbaikan_lanjutan',
+        'tgl_end', 
+        'status',
     ];
+
+    public function users()
+{
+    return $this->belongsTo(User::class);
+}
 }
