@@ -2,22 +2,6 @@
 
 @section('title', 'Buat Laporan')
 
-@section('css')
-    <style>
-        .dark-mode input:-webkit-autofill,
-        .dark-mode input:-webkit-autofill:focus,
-        .dark-mode input:-webkit-autofill:hover,
-        .dark-mode select:-webkit-autofill,
-        .dark-mode select:-webkit-autofill:focus,
-        .dark-mode select:-webkit-autofill:hover,
-        .dark-mode textarea:-webkit-autofill,
-        .dark-mode textarea:-webkit-autofill:focus,
-        .dark-mode textarea:-webkit-autofill:hover {
-            -webkit-text-fill-color: #000 !important;
-        }
-    </style>
-@endsection
-
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -28,7 +12,7 @@
                     <!-- general form elements -->
                     <div class="card card-primary">
                         <div class="card-header">
-                            <h3 class="card-title">Tambah User baru</h3>
+                            <h3 class="card-title">Tambah Laporan Baru</h3>
                         </div>
                         <form method="POST" action="{{ route('client.laporan.store') }}" enctype='multipart/form-data'>
                             @csrf

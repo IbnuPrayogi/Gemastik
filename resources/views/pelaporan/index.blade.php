@@ -85,8 +85,12 @@
                                                 <td>Proses Perbaikan</td>
                                             @elseif ($value->status == 3)
                                                 <td>Sudah Diperbaiki</td>
+                                            @elseif ($value->status == 4)
+                                                <td>Laporan Selesai</td>
+                                            @else
+                                                <td></td>
                                             @endif
-                                            <td class="justify-content-center d-flex">
+                                            <td class="justify-content-center d-flex" style="align-items: center !important;">
                                                 @if (Auth::user()->id_roles == 11)
                                                     <a href="{{ route('admin.laporan.show', $value->id) }}" class="mx-1 btn-sm btn-primary text-decoration-none">
                                                 @else
@@ -105,7 +109,7 @@
                                                 @endif
                                                 @if (Auth::user()->id_roles == 99 && $value->status < 2)
                                                     <!-- Button trigger modal -->
-                                                    <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}">
+                                                    <a role="button" class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}">
                                                         <i class="fa-solid fa-trash-can"></i>
                                                     </a>
                                                     <!-- Modal -->
@@ -120,15 +124,14 @@
                                                                 </div>
                                                                 <div class="modal-body">
                                                                     Apakah Anda yakin ingin menghapus laporan ini? <br>
-                                                                    "{{ $value->nama_proyek }}"
+                                                                    "Nama perusahaan {{ $value->nama_company }} di {{ $value->nama_lokasi }}"
                                                                 </div>
                                                                 <div class="modal-footer">
                                                                     <form action="{{ route('client.laporan.destroy', $value->id) }}"
                                                                         method="POST">
                                                                         @method('DELETE')
                                                                         @csrf
-                                                                        <input type="submit" class="btn btn-danger light"
-                                                                            name="" id="" value="Hapus">
+                                                                        <input type="submit" class="btn btn-danger light" value="Hapus">
                                                                         <button type="button" class="btn btn-primary"
                                                                             data-dismiss="modal">Tidak</button>
                                                                     </form>

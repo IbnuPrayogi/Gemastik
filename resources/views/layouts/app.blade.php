@@ -21,6 +21,19 @@
     <!-- Scripts -->
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <style>
+        .dark-mode input:-webkit-autofill,
+        .dark-mode input:-webkit-autofill:focus,
+        .dark-mode input:-webkit-autofill:hover,
+        .dark-mode select:-webkit-autofill,
+        .dark-mode select:-webkit-autofill:focus,
+        .dark-mode select:-webkit-autofill:hover,
+        .dark-mode textarea:-webkit-autofill,
+        .dark-mode textarea:-webkit-autofill:focus,
+        .dark-mode textarea:-webkit-autofill:hover {
+            -webkit-background-clip: text;
+        }
+    </style>
     @yield('css')
 </head>
 <body class="hold-transition dark-mode sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
@@ -70,6 +83,8 @@
     <script src="{{ asset('lte/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') }}"></script>
     <!-- AdminLTE App -->
     <script src="{{ asset('lte/dist/js/adminlte.js') }}"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
     <!-- PAGE PLUGINS -->
     <!-- jQuery Mapael -->

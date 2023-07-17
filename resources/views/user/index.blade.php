@@ -67,11 +67,11 @@
                                                     <i class="fa-solid fa-marker"></i>
                                                 </a>
                                                 <!-- Button trigger modal -->
-                                                <a class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}">
+                                                <a role="button" class="mx-1 btn-sm btn-danger text-decoration-none" data-toggle="modal" data-target="#hapus-{{ $value->id }}" >
                                                     <i class="fa-solid fa-trash-can"></i>
                                                 </a>
                                                 <!-- Modal -->
-                                                <div id="hapus-{{ $value->id }}" class="modal fade" tabindex="-1"
+                                                <div id="hapus-{{ $value->id }}" class="modal fade"  tabindex="-1"
                                                     role="dialog" aria-hidden="true">
                                                     <div class="modal-dialog bd-danger">
                                                         <div class="modal-content">
@@ -101,6 +101,9 @@
                                                 <!-- /.modal -->
                                             </td>
                                         </tr>
+                                        @php
+                                        $no++;
+                                    @endphp
                                     @endforeach
                                 </tbody>
                             </table>
@@ -112,6 +115,8 @@
             </div>
         </div>
     </section>
+
+
 @endsection
 
 @section('script')

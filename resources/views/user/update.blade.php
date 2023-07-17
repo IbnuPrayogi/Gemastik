@@ -13,6 +13,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <form action="{{route('admin.user.update', $users->id)}}" method="POST">
+                        @method('PUT')
                         @csrf
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Nama Perusahaan</label>
@@ -28,9 +29,9 @@
                         </div>
                         <div class="mb-3 row">
                             <label class="col-sm-3 col-form-label">Role</label>
-                            <select name="id_role" required class="custom-select form-control-border"
-                                id="id_role">
-                                <option selected value="{{$users->id_role}}">
+                            <select name="id_roles" required class="custom-select form-control-border"
+                                id="id_roles">
+                                <option selected value="{{$users->id_roles}}">
                                     @if ($users->id_roles == 99)
                                         Kontraktor
                                     </option>

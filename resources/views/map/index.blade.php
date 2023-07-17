@@ -251,7 +251,7 @@
             }else if(point.properties.status == 2){
                 vectorLayerOrange.getSource().addFeature(marker);
             }else if(point.properties.status == 3){
-                vectorLayerRed.getSource().addFeature(marker);
+                vectorLayer.getSource().addFeature(marker);
             }else if(point.properties.status == 4){
                 vectorLayerGold.getSource().addFeature(marker);
             }

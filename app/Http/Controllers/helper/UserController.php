@@ -67,7 +67,18 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $user = User::findOrFail($id);
+        $user->update([
+            'id_roles' => $request->id_roles,
+            'nama_company' => $request->nama_company,
+            'nama_pemilik' => $request->nama_pemilik,
+            'email' => $request->email,
+            'rekening' => $request->rekening,
+            'status' => $request->status,
+        ]);
+        $user->save();
+
+        return redirect()->route('admin.user.index');
     }
 
     /**

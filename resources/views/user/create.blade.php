@@ -2,22 +2,6 @@
 
 @section('title', 'Tambah User')
 
-@section('css')
-    <style>
-        .dark-mode input:-webkit-autofill,
-        .dark-mode input:-webkit-autofill:focus,
-        .dark-mode input:-webkit-autofill:hover,
-        .dark-mode select:-webkit-autofill,
-        .dark-mode select:-webkit-autofill:focus,
-        .dark-mode select:-webkit-autofill:hover,
-        .dark-mode textarea:-webkit-autofill,
-        .dark-mode textarea:-webkit-autofill:focus,
-        .dark-mode textarea:-webkit-autofill:hover {
-            -webkit-text-fill-color: #000 !important;
-        }
-    </style>
-@endsection
-
 @section('content')
     <!-- Main content -->
     <section class="content">
@@ -32,6 +16,7 @@
                         </div>
                         <form method="POST" action="{{ route('admin.user.store') }}" enctype='multipart/form-data' autocomplete="off">
                             @csrf
+                            @method('POST')
                             <div class="card-body">
                                 <div class="form-group">
                                     <label for="id_roles">Roles</label>
