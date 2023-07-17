@@ -67,19 +67,18 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::where('id', $id)->first();
-        $user->nama_company = $request->input('nama_company');
-        $user->nama_pemilik = $request->input('nama_pemilik');
-        $user->id_roles = $request->input('id_roles');
-        $user->email = $request->input('email');
-        $user->rekening = $request->input('rekening');
-        $user->email = $request->input('email');
-        $user->status = $request->input('status');
+        $user = User::findOrFail($id);
+        $user->update([
+            'id_roles' => $request->id_roles,
+            'nama_company' => $request->nama_company,
+            'nama_pemilik' => $request->nama_pemilik,
+            'email' => $request->email,
+            'rekening' => $request->rekening,
+            'status' => $request->status,
+        ]);
         $user->save();
 
-        $users=User::all();
-
-        return view('user.index',compact('users'));
+        return redirect()->route('admin.user.index');
     }
 
     /**
